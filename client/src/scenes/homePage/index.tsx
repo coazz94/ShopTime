@@ -11,14 +11,14 @@ export default function Homepage() {
                     justifyContent: "center",
                     alignItems: "center",
                     flexDirection: "column",
-                    mt: 20,
+                    mt: { xs: 2, xl: 20 },
                     flexWrap: "wrap",
+                    padding: 2,
                 }}
             >
                 <Box sx={{ padding: 0, mb: 5 }}>
                     <Typography
                         variant="h6"
-                        noWrap
                         component="a"
                         sx={{
                             fontFamily: "Arial",
@@ -51,7 +51,7 @@ export default function Homepage() {
                         variant="contained"
                         color="secondary"
                         sx={{
-                            mr: 10,
+                            mr: { xs: 2, xl: 10 },
                             padding: 1.5,
                             backgroundColor: "#E74C3C",
                         }}
