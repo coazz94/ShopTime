@@ -46,7 +46,7 @@ function Navbar() {
         <CssBaseline>
             <AppBar
                 position="static"
-                style={{
+                sx={{
                     backgroundColor: "transparent",
                     boxShadow: "none",
                 }}
@@ -71,10 +71,10 @@ function Navbar() {
                             component="a"
                             href="/"
                             sx={{
-                                mr: 110,
+                                mr: { md: 20, xl: 100, lg: 50 },
                                 display: { xs: "none", md: "flex" },
-                                fontFamily: "monospace",
-                                fontSize: "1.8rem",
+                                fontFamily: "Arial",
+                                fontSize: "1.5rem",
                                 fontWeight: 800,
                                 color: "#2C3E50",
                                 textDecoration: "none",
@@ -95,10 +95,12 @@ function Navbar() {
                                 aria-controls="menu-appbar"
                                 aria-haspopup="true"
                                 onClick={handleOpenNavMenu}
-                                color="inherit"
                             >
                                 <MenuIcon />
                             </IconButton>
+
+                            {/* Mobile Menu */}
+
                             <Menu
                                 id="menu-appbar"
                                 anchorEl={anchorElNav}
@@ -124,7 +126,7 @@ function Navbar() {
                                     >
                                         <Typography
                                             textAlign="center"
-                                            style={{ color: "#2C3E50" }}
+                                            sx={{ color: "#2C3E50" }}
                                         >
                                             {page}
                                         </Typography>
@@ -161,6 +163,7 @@ function Navbar() {
                         >
                             ShopTime
                         </Typography>
+
                         <Box
                             sx={{
                                 flexGrow: 1,
@@ -184,6 +187,8 @@ function Navbar() {
                             ))}
                         </Box>
                         <Box sx={{ flexGrow: 0 }}>
+                            {/* ProfilePicture */}
+
                             <Tooltip title="Open settings">
                                 <IconButton
                                     onClick={handleOpenUserMenu}
@@ -193,9 +198,10 @@ function Navbar() {
                                 </IconButton>
                             </Tooltip>
 
+                            {/* Cart */}
+
                             <Tooltip title="Open Cart">
                                 <IconButton
-                                    onClick={handleOpenUserMenu}
                                     sx={{
                                         mr: 1,
                                         mt: 1,
@@ -208,9 +214,12 @@ function Navbar() {
                                     ></ShoppingBasketIcon>
                                 </IconButton>
                             </Tooltip>
+
+                            {/* Menu Options */}
+
                             <Menu
                                 sx={{ mt: "45px" }}
-                                id="menu-appbar"
+                                id="basic-menu"
                                 anchorEl={anchorElUser}
                                 anchorOrigin={{
                                     vertical: "top",
