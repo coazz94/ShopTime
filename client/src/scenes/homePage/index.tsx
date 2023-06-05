@@ -1,4 +1,5 @@
-import { Box, Button, Container, Typography } from "@mui/material"
+import { Box, Button, Typography } from "@mui/material"
+import SwipeableTextMobileStepper from "./test"
 
 export default function Homepage() {
     return (
@@ -11,7 +12,7 @@ export default function Homepage() {
                     justifyContent: "center",
                     alignItems: "center",
                     flexDirection: "column",
-                    mt: { xs: 2, xl: 20 },
+                    mt: { xs: 2, xl: 14 },
                     flexWrap: "wrap",
                     padding: 2,
                 }}
@@ -62,7 +63,7 @@ export default function Homepage() {
                         variant="contained"
                         color="secondary"
                         sx={{
-                            mr: 10,
+                            // mr: 10,
                             padding: 1.5,
                             backgroundColor: "#E74C3C",
                         }}
@@ -71,20 +72,18 @@ export default function Homepage() {
                     </Button>
                 </Box>
             </Box>
-            {/* <Box
+            <Box
                 maxWidth="100%"
                 sx={{
-                    backgroundColor: "red",
+                    // backgroundColor: "red",
                     display: "flex",
                     justifyContent: "center",
-                    alignItems: "center",
-                    flexDirection: "column",
-                    mt: 10,
-                    flexWrap: "wrap",
                 }}
             >
-                Caroselle
-            </Box> */}
+                <SwipeableTextMobileStepper />
+                <SwipeableTextMobileStepper />
+                <SwipeableTextMobileStepper />
+            </Box>
         </>
     )
 }
