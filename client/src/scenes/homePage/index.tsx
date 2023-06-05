@@ -1,5 +1,5 @@
 import { Box, Button, Typography } from "@mui/material"
-import SwipeableTextMobileStepper from "./test"
+import SwipeableTextMobileStepper from "./swipeProducts"
 
 export default function Homepage() {
     return (
@@ -76,13 +76,12 @@ export default function Homepage() {
                 maxWidth="100%"
                 sx={{
                     // backgroundColor: "red",
+                    mt: 5,
                     display: "flex",
                     justifyContent: "center",
                 }}
             >
-                <SwipeableTextMobileStepper />
-                <SwipeableTextMobileStepper />
-                <SwipeableTextMobileStepper />
+                {/* <SwipeableTextMobileStepper /> */}
             </Box>
         </>
     )

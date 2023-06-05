@@ -16,8 +16,7 @@
         "@mui/material": "^5.13.3",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
-        "react-swipeable-views": "^0.14.0",
-        "react-swipeable-views-utils": "^0.14.0"
+        "react-router-dom": "^6.11.2"
     },
     "devDependencies": {
         "@types/react": "^18.0.37",

@@ -15,8 +15,15 @@ import {
     Tooltip,
     MenuItem,
 } from "@mui/material"
+import { Link } from "react-router-dom"
 
 const pages = ["Home", "Products", "Contact Us"]
+
+const pageLinks = [
+    { link: "/", page: "Home" },
+    { link: "/products", page: "Products" },
+    { link: "/contact-info", page: "Contact" },
+]
 const settings = ["Account", "Logout"]
 
 function Navbar() {
@@ -170,10 +177,11 @@ function Navbar() {
                                 display: { xs: "none", md: "flex" },
                             }}
                         >
-                            {pages.map((page) => (
+                            {pageLinks.map(({ link, page }) => (
                                 <Button
+                                    component={Link}
+                                    to={`${link}`}
                                     key={page}
-                                    onClick={handleCloseNavMenu}
                                     sx={{
                                         my: 2,
                                         fontWeight: "bold",
@@ -194,7 +202,9 @@ function Navbar() {
                                     onClick={handleOpenUserMenu}
                                     sx={{ p: 0, mr: { xs: 0, md: 6 } }}
                                 >
-                                    <Avatar src="/static/images/avatar/2.jpg" />
+                                    <Avatar
+                                    // src="/static/images/avatar/2.jpg"
+                                    />
                                 </IconButton>
                             </Tooltip>
 
@@ -233,6 +243,8 @@ function Navbar() {
                                 open={Boolean(anchorElUser)}
                                 onClose={handleCloseUserMenu}
                             >
+                                {/* ADD HERE THE LINKS TO LOGIN  */}
+
                                 {settings.map((setting) => (
                                     <MenuItem
                                         key={setting}
