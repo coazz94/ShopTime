@@ -14,6 +14,7 @@ import {
     Button,
     Tooltip,
     MenuItem,
+    Link as MuiLink,
 } from "@mui/material"
 import { Link } from "react-router-dom"
 
@@ -24,7 +25,7 @@ const pageLinks = [
     { link: "/products", page: "Products" },
     { link: "/contact-info", page: "Contact" },
 ]
-const settings = ["Account", "Logout"]
+// const settings = ["Account", "Logout"]
 
 function Navbar() {
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
@@ -33,6 +34,8 @@ function Navbar() {
     const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
         null
     )
+
+    const isAuth = true
 
     const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorElNav(event.currentTarget)
@@ -243,18 +246,36 @@ function Navbar() {
                                 open={Boolean(anchorElUser)}
                                 onClose={handleCloseUserMenu}
                             >
-                                {/* ADD HERE THE LINKS TO LOGIN  */}
-
-                                {settings.map((setting) => (
-                                    <MenuItem
-                                        key={setting}
-                                        onClick={handleCloseUserMenu}
+                                <MenuItem
+                                    key={"account"}
+                                    onClick={handleCloseUserMenu}
+                                >
+                                    <MuiLink
+                                        sx={{
+                                            // fontFamily: "Arial",
+                                            color: "#2C3E50",
+                                            textDecoration: "none",
+                                        }}
+                                        href="/profile"
                                     >
-                                        <Typography textAlign="center">
-                                            {setting}
-                                        </Typography>
-                                    </MenuItem>
-                                ))}
+                                        Account
+                                    </MuiLink>
+                                </MenuItem>
+                                <MenuItem
+                                    key={"account"}
+                                    onClick={handleCloseUserMenu}
+                                >
+                                    <MuiLink
+                                        sx={{
+                                            fontFamily: "Arial",
+                                            color: "#2C3E50",
+                                            textDecoration: "none",
+                                        }}
+                                        href="/login"
+                                    >
+                                        {isAuth ? "Logout" : "Login"}
+                                    </MuiLink>
+                                </MenuItem>
                             </Menu>
                         </Box>
                     </Toolbar>
