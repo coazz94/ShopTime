@@ -4,6 +4,7 @@ import ProductPage from "./scenes/productPage"
 import ProfilePage from "./scenes/profilePage"
 import LoginPage from "./scenes/loginPage"
 import ContactPage from "./scenes/contactPage"
+import CartPage from "./scenes/cartPage"
 
 import { BrowserRouter, Route, Routes } from "react-router-dom"
 
@@ -19,6 +20,7 @@ function App() {
                     <Route path="/products" element={<ProductPage />} />
                     <Route path="/login" element={<LoginPage />} />
                     <Route path="/contact-info" element={<ContactPage />} />
+                    <Route path="/cart" element={<CartPage />} />
                     <Route
                         path="/profile"
                         element={isAuth ? <ProfilePage /> : <LoginPage />}

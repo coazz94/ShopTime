@@ -129,7 +129,44 @@ function Navbar() {
                                     display: { xs: "block", md: "none" },
                                 }}
                             >
-                                {pages.map((page) => (
+                                {/* mobile Pages  */}
+
+                                {/* {pageLinks.map(({ link, page }) => (
+                                    <Button
+                                        component={Link}
+                                        to={`${link}`}
+                                        key={page}
+                                        sx={{
+                                            my: 2,
+                                            fontWeight: "bold",
+                                            fontSize: "1rem",
+                                            color: "#2C3E50",
+                                            display: "block",
+                                        }}
+                                    >
+                                        {page}
+                                    </Button>
+                                ))} */}
+
+                                {pageLinks.map(({ link, page }) => (
+                                    <MenuItem
+                                        key={page}
+                                        onClick={handleCloseNavMenu}
+                                    >
+                                        <Button
+                                            component={Link}
+                                            to={`${link}`}
+                                            key={page}
+                                            sx={{
+                                                color: "#2C3E50",
+                                                display: "block",
+                                            }}
+                                        >
+                                            {page}
+                                        </Button>
+                                    </MenuItem>
+                                ))}
+                                {/* {pages.map((page) => (
                                     <MenuItem
                                         key={page}
                                         onClick={handleCloseNavMenu}
@@ -141,7 +178,7 @@ function Navbar() {
                                             {page}
                                         </Typography>
                                     </MenuItem>
-                                ))}
+                                ))} */}
                             </Menu>
                         </Box>
                         {/* MOBILE NAV */}
@@ -197,7 +234,13 @@ function Navbar() {
                                 </Button>
                             ))}
                         </Box>
-                        <Box sx={{ flexGrow: 0 }}>
+                        <Box
+                            sx={{
+                                display: "flex",
+                                flexGrow: 0,
+                                flexDirection: "row",
+                            }}
+                        >
                             {/* ProfilePicture */}
 
                             <Tooltip title="Open settings">
@@ -214,18 +257,22 @@ function Navbar() {
                             {/* Cart */}
 
                             <Tooltip title="Open Cart">
-                                <IconButton
+                                <Button
+                                    component={Link}
+                                    to={"/cart"}
                                     sx={{
                                         mr: 1,
-                                        mt: 1,
-                                        display: { xs: "none", md: "inline" },
+                                        // ml: 1,
+                                        display: { xs: "none", md: "flex" },
                                     }}
                                 >
                                     <ShoppingBasketIcon
-                                        color="primary"
-                                        style={{ width: "40", height: "40" }}
+                                        sx={{
+                                            width: 40,
+                                            height: 40,
+                                        }}
                                     ></ShoppingBasketIcon>
-                                </IconButton>
+                                </Button>
                             </Tooltip>
 
                             {/* Menu Options */}
@@ -259,6 +306,24 @@ function Navbar() {
                                         href="/profile"
                                     >
                                         Account
+                                    </MuiLink>
+                                </MenuItem>
+                                <MenuItem
+                                    sx={{
+                                        display: { xs: "flex", md: "none" },
+                                    }}
+                                    key={"cart"}
+                                    onClick={handleCloseUserMenu}
+                                >
+                                    <MuiLink
+                                        sx={{
+                                            fontFamily: "Arial",
+                                            color: "#2C3E50",
+                                            textDecoration: "none",
+                                        }}
+                                        href="/cart"
+                                    >
+                                        Cart
                                     </MuiLink>
                                 </MenuItem>
                                 <MenuItem
