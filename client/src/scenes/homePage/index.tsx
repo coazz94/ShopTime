@@ -1,4 +1,13 @@
-import { Box, Button, Typography } from "@mui/material"
+import {
+    Box,
+    Button,
+    Card,
+    CardActions,
+    CardContent,
+    CardMedia,
+    Divider,
+    Typography,
+} from "@mui/material"
 // import SwipeableTextMobileStepper from "./swipeProducts"
 
 export default function Homepage() {
@@ -75,14 +84,158 @@ export default function Homepage() {
             <Box
                 maxWidth="100%"
                 sx={{
-                    // backgroundColor: "red",
-                    mt: 5,
+                    mt: 8,
                     display: "flex",
                     justifyContent: "center",
+                    alignItems: "center",
+                    height: "10rem",
                 }}
             >
-                {/* <SwipeableTextMobileStepper /> */}
+                <Typography style={{ fontSize: "1.3rem" }}>
+                    More than 120 000 Users registered, Join us and become a
+                    part of the Community !
+                </Typography>
             </Box>
+
+            <Box
+                sx={{
+                    backgroundColor: "#faecef",
+                    display: "flex",
+                    alignItems: "center",
+                    flexDirection: "column",
+                }}
+            >
+                <Typography mt={5} mb={2} variant="h6">
+                    Why ShopTime ?
+                </Typography>
+
+                <Divider sx={{ width: "100%" }} variant="middle" />
+                <Box
+                    sx={{
+                        mt: 4,
+                    }}
+                >
+                    <Box
+                        sx={{
+                            display: "flex",
+                            flexDirection: "column",
+                            alignItems: "center",
+                            width: "100%",
+                            gap: "1.5rem",
+                        }}
+                    >
+                        <Typography variant="h5" gutterBottom>
+                            Voted “Best Shop" by Customers on XXX
+                        </Typography>
+                        <Typography variant="h6" gutterBottom align="center">
+                            Happy customers become loyal customers. That’s why
+                            ShopTime has won <br />
+                            The best Sop Reward year after year.
+                        </Typography>
+                    </Box>
+                    <Box
+                        sx={{
+                            mt: 10,
+                            display: "flex",
+                            justifyContent: "center",
+                            gap: 10,
+                            mb: 7,
+                        }}
+                    >
+                        <Card sx={{ maxWidth: 300 }}>
+                            <CardMedia
+                                component="img"
+                                alt="time pic"
+                                height="300"
+                                src="../assets/time.png"
+                            />
+                            <CardContent>
+                                <Typography
+                                    gutterBottom
+                                    variant="h5"
+                                    component="div"
+                                    align="center"
+                                >
+                                    Get started in minutes
+                                </Typography>
+                                <Typography
+                                    variant="body2"
+                                    color="text.secondary"
+                                >
+                                    Lorem ipsum dolor sit amet, consectetur
+                                    adipiscing elit, sed do eiusmod tempor
+                                    incididunt ut labore et dolore magna aliqua.
+                                    Integer vitae justo eget magna fermentum
+                                    iaculis.
+                                </Typography>
+                            </CardContent>
+                        </Card>
+                        <Card sx={{ maxWidth: 300 }}>
+                            <CardMedia
+                                component="img"
+                                alt="time pic"
+                                height="300"
+                                src="../assets/coffee.png"
+                            />
+                            <CardContent>
+                                <Typography
+                                    gutterBottom
+                                    variant="h5"
+                                    component="div"
+                                    align="center"
+                                >
+                                    Increase sell time by 50%
+                                </Typography>
+                                <Typography
+                                    variant="body2"
+                                    color="text.secondary"
+                                >
+                                    Lorem ipsum dolor sit amet, consectetur
+                                    adipiscing elit, sed do eiusmod tempor
+                                    incididunt ut labore et dolore magna aliqua.
+                                    Integer vitae justo eget magna fermentum
+                                    iaculis.
+                                </Typography>
+                            </CardContent>
+                        </Card>
+                        <Card sx={{ maxWidth: 300 }}>
+                            <CardMedia
+                                component="img"
+                                alt="time pic"
+                                height="300"
+                                src="../assets/rocket.png"
+                            />
+                            <CardContent>
+                                <Typography
+                                    gutterBottom
+                                    variant="h5"
+                                    component="div"
+                                    align="center"
+                                >
+                                    Connect with People
+                                </Typography>
+                                <Typography
+                                    variant="body2"
+                                    color="text.secondary"
+                                >
+                                    Lorem ipsum dolor sit amet, consectetur
+                                    adipiscing elit, sed do eiusmod tempor
+                                    incididunt ut labore et dolore magna aliqua.
+                                    Integer vitae justo eget magna fermentum
+                                    iaculis.
+                                </Typography>
+                            </CardContent>
+                        </Card>
+                    </Box>
+                </Box>
+            </Box>
+
+            <Box
+                sx={{
+                    height: "20rem",
+                    backgroundColor: "#2b34af",
+                }}
+            ></Box>
         </>
     )
 }
