@@ -1,5 +1,5 @@
 import { Box, Button, Typography } from "@mui/material"
-import SwipeableTextMobileStepper from "./swipeProducts"
+// import SwipeableTextMobileStepper from "./swipeProducts"
 
 export default function Homepage() {
     return (
