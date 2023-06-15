@@ -18,8 +18,6 @@ import {
 } from "@mui/material"
 import { Link } from "react-router-dom"
 
-const pages = ["Home", "Products", "Contact Us"]
-
 const pageLinks = [
     { link: "/", page: "Home" },
     { link: "/products", page: "Products" },
