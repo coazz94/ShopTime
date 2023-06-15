@@ -18,14 +18,11 @@ import {
 } from "@mui/material"
 import { Link } from "react-router-dom"
 
-const pages = ["Home", "Products", "Contact Us"]
-
 const pageLinks = [
     { link: "/", page: "Home" },
     { link: "/products", page: "Products" },
     { link: "/contact-info", page: "Contact" },
 ]
-// const settings = ["Account", "Logout"]
 
 function Navbar() {
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
@@ -35,7 +32,7 @@ function Navbar() {
         null
     )
 
-    const isAuth = true
+    const isAuth = false
 
     const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorElNav(event.currentTarget)
