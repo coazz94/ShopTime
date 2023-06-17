@@ -6,12 +6,15 @@ import cors from "cors"
 import path from "path"
 import multer from "multer"
 import "dotenv/config"
+import mongoose from "mongoose"
 
 // Routes
 import { authRoutes } from "./routes/auth"
 import { userRoutes } from "./routes/user"
+import User from "./models/User"
+import { users } from "./data"
 
-const PORT = process.env.PORT
+const PORT = process.env.PORT || 3001
 
 const app = express()
 
@@ -52,4 +55,13 @@ const upload = multer({ storage: storage })
 app.use("/auth", authRoutes)
 app.use("/users", userRoutes)
 
-app.listen(PORT, () => console.log(`Server is Running on Port: ${PORT}`))
+// connect to the mongodb database, use `` for the URI In typescript !
+mongoose
+    .connect(`${process.env.MONGO_URI}`)
+    .then(() => {
+        app.listen(PORT, () =>
+            console.log(`Server is Running on Port: ${PORT}`)
+        )
+        // User.insertMany(users)
+    })
+    .catch((error) => console.log(`${error} did not connect`))
