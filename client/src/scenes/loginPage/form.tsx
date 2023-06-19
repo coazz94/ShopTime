@@ -36,6 +36,10 @@ export default function Form() {
         return data
     }
 
+    function test() {
+        console.log("hey")
+    }
+
     function handleFormSubmit(formData: FormValues) {
         if (isLogin) loginUser(formData)
         if (!isLogin) registerUser(formData)
