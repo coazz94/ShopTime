@@ -325,7 +325,7 @@ function Navbar() {
                                     </MuiLink>
                                 </MenuItem>
                                 <MenuItem
-                                    key={"account"}
+                                    key={"account2"}
                                     onClick={handleCloseUserMenu}
                                 >
                                     <MuiLink
