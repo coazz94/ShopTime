@@ -1,6 +1,4 @@
-import React from "react"
 import {
-    Avatar,
     Button,
     CssBaseline,
     TextField,
@@ -10,35 +8,21 @@ import {
     Grid,
     Typography,
     Container,
-    makeStyles,
 } from "@mui/material"
 
-// https://www.youtube.com/watch?v=PquWexbGcVc
+import { useForm } from "react-hook-form"
 
-import { useForm, Controller } from "react-hook-form"
-
-// const useStyles = makeStyles((theme) => ({
-//     paper: {
-//         marginTop: theme.spacing(8),
-//         display: "flex",
-//         flexDirection: "column",
-//         alignItems: "center",
-//     },
-//     avatar: {
-//         margin: theme.spacing(1),
-//         backgroundColor: theme.palette.secondary.main,
-//     },
-//     form: {
-//         width: "100%", // Fix IE 11 issue.
-//         marginTop: theme.spacing(1),
-//     },
-//     submit: {
-//         margin: theme.spacing(3, 0, 2),
-//     },
-// }))
+type FormLoginValues = {
+    email: string
+    password: string
+}
 
 export default function Form() {
-    const { register, handleSubmit } = useForm()
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+    } = useForm<FormLoginValues>()
 
     return (
         <Container component="main" maxWidth="xs">
@@ -78,21 +62,6 @@ export default function Form() {
                         type="password"
                         id="password"
                         autoComplete="current-password"
-                    />
-                    <FormControlLabel
-                        {...register("check")}
-                        control={
-                            // <Controller
-                            //     as={Checkbox}
-                            //     control={control}
-                            //     name="remember"
-                            //     color="primary"
-                            //     defaultValue={false}
-                            // />
-
-                            <Checkbox value="remember" color="primary" />
-                        }
-                        label="Remember me"
                     />
                     <Button
                         type="submit"
