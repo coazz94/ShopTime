@@ -1,6 +1,7 @@
 import { Box, Button, TextField, Typography } from "@mui/material"
 import { useState } from "react"
 import { useForm } from "react-hook-form"
+import { useNavigate } from "react-router-dom"
 
 type FormValues = {
     email: string
@@ -12,17 +13,28 @@ type FormValues = {
 
 export default function Form() {
     const [pageType, setPageType] = useState<string>("login")
-    const isLogin: boolean = pageType === "register"
+    const isLogin: boolean = pageType === "login"
+
+    const navigate = useNavigate()
+
     // const isRegister: boolean = pageType === "register"
     const { register, handleSubmit, reset } = useForm<FormValues>()
 
-    const loginUser = async (data: FormValues) => {
-        // const a = await fetch("")
-        return data
+    const loginUser = async (formData: FormData) => {
+        const loginResponse = await fetch("http://localhost:3000/auth/login", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(formData),
+        })
+
+        if (loginResponse.ok) {
+            const loggedIn = await loginResponse.json()
+            console.log(loggedIn)
+        }
+
+        navigate("/home")
     }
     const registerUser = async (data: FormValues) => {
-        console.log(JSON.stringify(data))
-
         const registerUserResponse = await fetch(
             "http://localhost:3000/auth/register",
             {
@@ -32,12 +44,9 @@ export default function Form() {
             }
         )
 
-        // const a = await fetch("")
-        return data
-    }
+        const registeredUser = await registerUserResponse.json()
 
-    function test() {
-        console.log("hey")
+        if (registeredUser) setPageType("login")
     }
 
     function handleFormSubmit(formData: FormValues) {
