@@ -20,7 +20,7 @@ export default function Form() {
     // const isRegister: boolean = pageType === "register"
     const { register, handleSubmit, reset } = useForm<FormValues>()
 
-    const loginUser = async (formData: FormData) => {
+    const loginUser = async (formData: FormValues) => {
         const loginResponse = await fetch("http://localhost:3000/auth/login", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -32,7 +32,7 @@ export default function Form() {
             console.log(loggedIn)
         }
 
-        navigate("/home")
+        navigate("/")
     }
     const registerUser = async (data: FormValues) => {
         const registerUserResponse = await fetch(

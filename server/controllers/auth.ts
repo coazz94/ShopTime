@@ -14,9 +14,11 @@ type RegisterData = {
 
 export async function register(req: Request, res: Response) {
     try {
-        // const { username, email, phone, password, r_password } = <RegisterData>(
-        //     req.body
-        // )
+        const { username, email, phone, password, r_password } = <RegisterData>(
+            req.body
+        )
+
+        console.log("registering Successful", username, email)
 
         // const salt: string = await bcrypt.genSalt()
         // const passwordHash: string = await bcrypt.hash(password, salt)
@@ -38,6 +40,6 @@ export async function register(req: Request, res: Response) {
     }
 }
 
-export function login() {
-    console.log("hey")
+export function login(req: Request, res: Response) {
+    res.status(201).json("succeed")
 }
