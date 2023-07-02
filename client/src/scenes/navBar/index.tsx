@@ -33,7 +33,7 @@ function Navbar() {
         null
     )
 
-    const isAuth = true
+    const isAuth = false
 
     const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorElNav(event.currentTarget)
@@ -325,7 +325,7 @@ function Navbar() {
                                     </MuiLink>
                                 </MenuItem>
                                 <MenuItem
-                                    key={"account"}
+                                    key={"account2"}
                                     onClick={handleCloseUserMenu}
                                 >
                                     <MuiLink

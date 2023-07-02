@@ -1,7 +1,9 @@
 import express from "express"
+import { login, register } from "../controllers/auth"
 
 const router = express.Router()
 
-router.post("/login", (req, res) => res.send("mjau"))
+router.post("/register", register)
+router.post("/login", login)
 
 export { router as authRoutes }
