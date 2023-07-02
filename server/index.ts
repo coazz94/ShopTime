@@ -53,7 +53,7 @@ const upload = multer({ storage: storage })
 // app.post("/auth/register", register)
 
 app.use("/auth", authRoutes)
-app.use("/users", userRoutes)
+app.use("/user", userRoutes)
 
 // connect to the mongodb database, use `` for the URI In typescript !
 mongoose

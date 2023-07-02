@@ -17,13 +17,13 @@ import {
     Link as MuiLink,
 } from "@mui/material"
 import { Link } from "react-router-dom"
+import { useAppSelector } from "../../state/hooks"
 
 const pageLinks = [
     { link: "/", page: "Home" },
     { link: "/products", page: "Products" },
     { link: "/contact-info", page: "Contact" },
 ]
-// const settings = ["Account", "Logout"]
 
 function Navbar() {
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
@@ -32,8 +32,6 @@ function Navbar() {
     const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
         null
     )
-
-    const isAuth = false
 
     const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorElNav(event.currentTarget)
@@ -49,6 +47,10 @@ function Navbar() {
     const handleCloseUserMenu = () => {
         setAnchorElUser(null)
     }
+
+    const user = useAppSelector((state) => state.user)
+
+    const isAuth = user !== "" ? true : false
 
     return (
         <CssBaseline>
@@ -301,7 +303,8 @@ function Navbar() {
                                             color: "#2C3E50",
                                             textDecoration: "none",
                                         }}
-                                        href="/profile"
+                                        // ADD here the user ID
+                                        href="/user/123"
                                     >
                                         Account
                                     </MuiLink>

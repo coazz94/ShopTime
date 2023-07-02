@@ -5,11 +5,10 @@ import ProfilePage from "./scenes/profilePage"
 import LoginPage from "./scenes/loginPage"
 import ContactPage from "./scenes/contactPage"
 import CartPage from "./scenes/cartPage"
-
 import { BrowserRouter, Route, Routes } from "react-router-dom"
 
 function App() {
-    const isAuth = true
+    const isAuth = false
 
     return (
         <>
@@ -22,7 +21,7 @@ function App() {
                     <Route path="/contact-info" element={<ContactPage />} />
                     <Route path="/cart" element={<CartPage />} />
                     <Route
-                        path="/profile"
+                        path="/user/:id"
                         element={isAuth ? <ProfilePage /> : <LoginPage />}
                     />
                 </Routes>

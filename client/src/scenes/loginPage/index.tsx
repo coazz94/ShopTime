@@ -2,8 +2,6 @@ import { Box, Typography } from "@mui/material"
 import Form from "./form"
 
 const LoginPage = () => {
-    //CHECK IF LOGIN, SET PAGE TITLE
-
     const isLogin = false
 
     return (

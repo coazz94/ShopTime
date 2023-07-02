@@ -1,7 +1,9 @@
 import { Box, Button, TextField, Typography } from "@mui/material"
 import { useState } from "react"
 import { useForm } from "react-hook-form"
+import { useAppDispatch, useAppSelector } from "../../state/hooks"
 import { useNavigate } from "react-router-dom"
+import { setLogin } from "../../state"
 
 type FormValues = {
     email: string
@@ -14,8 +16,8 @@ type FormValues = {
 export default function Form() {
     const [pageType, setPageType] = useState<string>("login")
     const isLogin: boolean = pageType === "login"
-
     const navigate = useNavigate()
+    const dispatch = useAppDispatch()
 
     // const isRegister: boolean = pageType === "register"
     const { register, handleSubmit, reset } = useForm<FormValues>()
@@ -27,9 +29,17 @@ export default function Form() {
             body: JSON.stringify(formData),
         })
 
+        const username = "aco"
+
         if (loginResponse.ok) {
             const loggedIn = await loginResponse.json()
             console.log(loggedIn)
+            dispatch(
+                setLogin({
+                    user: username,
+                    token: "",
+                })
+            )
         }
 
         navigate("/")
