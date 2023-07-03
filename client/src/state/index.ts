@@ -6,8 +6,8 @@ interface AuthState {
 }
 
 const initialState: AuthState = {
-    user: "",
-    token: "",
+    user: null,
+    token: null,
 }
 
 export const authSlice = createSlice({
@@ -21,9 +21,13 @@ export const authSlice = createSlice({
             state.user = action.payload.user
             state.token = action.payload.token
         },
+        setLogout: (state) => {
+            state.user = null
+            state.token = null
+        },
     },
 })
 
-export const { setLogin } = authSlice.actions
+export const { setLogin, setLogout } = authSlice.actions
 
 export default authSlice.reducer

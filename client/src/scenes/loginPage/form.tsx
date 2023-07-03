@@ -1,8 +1,7 @@
 import { Box, Button, TextField, Typography } from "@mui/material"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { useForm } from "react-hook-form"
-import { useAppDispatch, useAppSelector } from "../../state/hooks"
-import { useNavigate } from "react-router-dom"
+import { useAppDispatch } from "../../state/hooks"
 import { setLogin } from "../../state"
 
 type FormValues = {
@@ -16,7 +15,6 @@ type FormValues = {
 export default function Form() {
     const [pageType, setPageType] = useState<string>("login")
     const isLogin: boolean = pageType === "login"
-    const navigate = useNavigate()
     const dispatch = useAppDispatch()
     const { register, handleSubmit, reset } = useForm<FormValues>()
 
@@ -37,11 +35,8 @@ export default function Form() {
                 })
             )
         }
-
-        setTimeout(() => {
-            navigate("/")
-        }, 2000)
     }
+
     const registerUser = async (data: FormValues) => {
         const registerUserResponse = await fetch(
             "http://localhost:3000/auth/register",
@@ -57,7 +52,7 @@ export default function Form() {
         if (registeredUser) setPageType("login")
     }
 
-    function handleFormSubmit(formData: FormValues) {
+    const handleFormSubmit = (formData: FormValues) => {
         if (isLogin) loginUser(formData)
         if (!isLogin) registerUser(formData)
     }

@@ -17,7 +17,6 @@ import {
     Link as MuiLink,
 } from "@mui/material"
 import { Link } from "react-router-dom"
-import { useAppSelector } from "../../state/hooks"
 
 const pageLinks = [
     { link: "/", page: "Home" },
@@ -25,7 +24,12 @@ const pageLinks = [
     { link: "/contact-info", page: "Contact" },
 ]
 
-function Navbar() {
+type NavbarProps = {
+    logoutUser: () => void
+    isAuth: boolean
+}
+
+function Navbar({ logoutUser, isAuth }: NavbarProps) {
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
         null
     )
@@ -39,18 +43,12 @@ function Navbar() {
     const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorElUser(event.currentTarget)
     }
-
     const handleCloseNavMenu = () => {
         setAnchorElNav(null)
     }
-
     const handleCloseUserMenu = () => {
         setAnchorElUser(null)
     }
-
-    const user = useAppSelector((state) => state.user)
-
-    const isAuth = user !== "" ? true : false
 
     return (
         <CssBaseline>
@@ -304,7 +302,7 @@ function Navbar() {
                                             textDecoration: "none",
                                         }}
                                         // ADD here the user ID
-                                        href="/user/123"
+                                        href={isAuth ? "/user/ID" : "/login"}
                                     >
                                         Account
                                     </MuiLink>
@@ -331,16 +329,29 @@ function Navbar() {
                                     key={"account2"}
                                     onClick={handleCloseUserMenu}
                                 >
-                                    <MuiLink
-                                        sx={{
-                                            fontFamily: "Arial",
-                                            color: "#2C3E50",
-                                            textDecoration: "none",
-                                        }}
-                                        href="/login"
-                                    >
-                                        {isAuth ? "Logout" : "Login"}
-                                    </MuiLink>
+                                    {isAuth ? (
+                                        <MuiLink
+                                            sx={{
+                                                fontFamily: "Arial",
+                                                color: "#2C3E50",
+                                                textDecoration: "none",
+                                            }}
+                                            onClick={logoutUser}
+                                        >
+                                            Logout
+                                        </MuiLink>
+                                    ) : (
+                                        <MuiLink
+                                            sx={{
+                                                fontFamily: "Arial",
+                                                color: "#2C3E50",
+                                                textDecoration: "none",
+                                            }}
+                                            href="/login"
+                                        >
+                                            Login
+                                        </MuiLink>
+                                    )}
                                 </MenuItem>
                             </Menu>
                         </Box>
