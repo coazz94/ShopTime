@@ -1,6 +1,6 @@
 import Homepage from "./scenes/homePage"
 import Navbar from "./scenes/navBar"
-import ProductPage from "./scenes/productPage"
+import ProductOverview from "./scenes/productOverviewPage"
 import ProfilePage from "./scenes/profilePage"
 import LoginPage from "./scenes/loginPage"
 import ContactPage from "./scenes/contactPage"
@@ -8,6 +8,8 @@ import CartPage from "./scenes/cartPage"
 import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom"
 import { useAppDispatch, useAppSelector } from "./state/hooks"
 import { setLogout } from "./state"
+import ErrorPage from "./scenes/errorPage"
+import ProductPage from "./scenes/productsPage"
 
 function App() {
     const dispatch = useAppDispatch()
@@ -18,28 +20,25 @@ function App() {
         dispatch(setLogout())
     }
 
-    console.log(user)
-
     return (
         <>
             <BrowserRouter>
                 <Navbar logoutUser={logoutUser} isAuth={isAuth} />
                 <Routes>
                     <Route path="/" element={<Homepage />} />
-                    <Route path="/products" element={<ProductPage />} />
+                    <Route path="/products" element={<ProductOverview />} />
+                    <Route path="/products/:id" element={<ProductPage />} />
+                    <Route path="/login" element={<LoginPage />} />
+                    <Route path="/contact-info" element={<ContactPage />} />
+                    <Route path="/cart" element={<CartPage />} />
+                    <Route path="/user/:id" />
                     <Route
-                        path="/login"
+                        path="/profile"
                         element={
                             isAuth ? <ProfilePage /> : <Navigate to="/login" />
                         }
                     />
-                    <Route path="/contact-info" element={<ContactPage />} />
-                    <Route path="/cart" element={<CartPage />} />
-                    <Route
-                        path="/user/:id"
-                        element={isAuth ? <ProfilePage /> : <LoginPage />}
-                    />
-                    <Route element={<ProfilePage />} path="/profile" />
+                    <Route path="/*" element={<ErrorPage />} />
                 </Routes>
             </BrowserRouter>
         </>

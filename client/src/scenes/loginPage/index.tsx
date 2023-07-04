@@ -1,8 +1,9 @@
 import { Box, Typography } from "@mui/material"
 import Form from "./form"
+import { useState } from "react"
 
 const LoginPage = () => {
-    const isLogin = false
+    const [isLogin, setLogin] = useState<boolean>(true)
 
     return (
         <Box
@@ -23,7 +24,7 @@ const LoginPage = () => {
                     Welcome to ShopTime, the best Selling Place in the World!
                 </Typography>
             </Box>
-            <Form />
+            <Form setHeader={setLogin} />
         </Box>
     )
 }

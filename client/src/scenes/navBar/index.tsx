@@ -301,8 +301,7 @@ function Navbar({ logoutUser, isAuth }: NavbarProps) {
                                             color: "#2C3E50",
                                             textDecoration: "none",
                                         }}
-                                        // ADD here the user ID
-                                        href={isAuth ? "/user/ID" : "/login"}
+                                        href="/profile"
                                     >
                                         Account
                                     </MuiLink>

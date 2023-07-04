@@ -1,8 +1,10 @@
 import { Box, Button, TextField, Typography } from "@mui/material"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 import { useAppDispatch } from "../../state/hooks"
 import { setLogin } from "../../state"
+import { useNavigate } from "react-router-dom"
+import { LoadingButton } from "@mui/lab"
 
 type FormValues = {
     email: string
@@ -12,10 +14,17 @@ type FormValues = {
     r_password: string
 }
 
-export default function Form() {
+interface setHeaderType {
+    setHeader: React.Dispatch<React.SetStateAction<boolean>>
+}
+
+export default function Form({ setHeader }: setHeaderType) {
     const [pageType, setPageType] = useState<string>("login")
+    const [message, setMessage] = useState<string>("")
+    const [btnLoading, setBtnLoading] = useState<boolean>(false)
     const isLogin: boolean = pageType === "login"
     const dispatch = useAppDispatch()
+    const navigate = useNavigate()
     const { register, handleSubmit, reset } = useForm<FormValues>()
 
     const loginUser = async (formData: FormValues) => {
@@ -25,15 +34,24 @@ export default function Form() {
             body: JSON.stringify(formData),
         })
 
-        if (loginResponse.ok) {
-            const loggedIn = await loginResponse.json()
+        setBtnLoading(() => true)
+        await timeout(2000)
 
+        if (loginResponse.ok) {
+            setMessage(() => "Login Successful")
+            const loggedIn = await loginResponse.json()
             dispatch(
                 setLogin({
                     user: loggedIn.user._id,
                     token: loggedIn.token,
                 })
             )
+            await timeout(2000)
+            setBtnLoading(() => false)
+            navigate("/")
+        } else {
+            setBtnLoading(() => false)
+            setMessage("Login not successful !")
         }
     }
 
@@ -57,6 +75,14 @@ export default function Form() {
         if (!isLogin) registerUser(formData)
     }
 
+    const timeout = (delay: number) => {
+        return new Promise((res) => setTimeout(res, delay))
+    }
+
+    useEffect(() => {
+        setHeader(() => isLogin)
+    }, [pageType, setHeader, isLogin])
+
     return (
         <form onSubmit={handleSubmit((data) => handleFormSubmit(data))}>
             <Box
@@ -67,6 +93,13 @@ export default function Form() {
                 {/* Check if Login is true and show Login Page */}
                 {isLogin ? (
                     <>
+                        <Typography
+                            fontWeight="bold"
+                            fontSize="32px"
+                            color="primary"
+                        >
+                            {message}
+                        </Typography>
                         <TextField
                             {...register("email")}
                             variant="outlined"
@@ -159,7 +192,8 @@ export default function Form() {
                     alignItems: "center",
                 }}
             >
-                <Button
+                <LoadingButton
+                    loading={btnLoading}
                     type="submit"
                     fullWidth
                     variant="contained"
@@ -170,7 +204,7 @@ export default function Form() {
                     }}
                 >
                     {isLogin ? "LOGIN" : "REGISTER"}
-                </Button>
+                </LoadingButton>
                 <Typography
                     onClick={() => {
                         setPageType(isLogin ? "register" : "login"), reset()
