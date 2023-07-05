@@ -16,13 +16,10 @@ export async function register(req: Request, res: Response) {
         const { username, email, phone, password, r_password } = <RegisterData>(
             req.body
         )
-
         if (password !== r_password)
-            res.status(403).json("passwords didn't matched")
-
+            res.status(403).json({ errorMessage: "passwords didn't matched" })
         const salt: string = bcrypt.genSaltSync(10)
         const hash: string = bcrypt.hashSync(password, salt)
-
         const newUser = new User({
             username,
             email,
@@ -30,11 +27,8 @@ export async function register(req: Request, res: Response) {
             phone,
             lastOnline: new Date(),
         })
-
         const savedUser = await newUser.save()
         res.status(201).json(savedUser)
-
-        // res.status(201).json("succeed")
     } catch (error) {
         console.log(error)
     }
@@ -46,16 +40,19 @@ export async function login(req: Request, res: Response) {
     // Try to find the user
     const user = await User.findOne({ email })
     // if user doesn't exists return error
-    if (!user) return res.status(404).json("not found")
+    if (!user) return res.status(404).json({ errorMessage: "User not found" })
 
     // if user found check password with hash
     const isMatch = bcrypt.compareSync(loginPassword, user.password)
 
     // if no match password is wrong
-    if (!isMatch) return res.status(404).json("Password is wrong")
+    if (!isMatch)
+        return res.status(404).json({ errorMessage: "Password is wrong" })
 
     if (process.env.JWT_SECRET === undefined)
-        return res.status(404).json("JWT_SECRET wasn't available")
+        return res
+            .status(404)
+            .json({ errorMessage: "JWT_SECRET wasn't available" })
 
     let token = jwt.sign({ id: user._id }, process.env.JWT_SECRET)
 

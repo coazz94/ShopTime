@@ -20,7 +20,7 @@ const LoginPage = () => {
             </Box>
 
             <Box m="2rem auto" borderRadius="1.5rem">
-                <Typography fontWeight="500" variant="h5" sx={{ mb: "1.5rem" }}>
+                <Typography fontWeight="500" variant="h5">
                     Welcome to ShopTime, the best Selling Place in the World!
                 </Typography>
             </Box>

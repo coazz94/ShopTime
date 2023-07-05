@@ -1,4 +1,4 @@
-import { Box, Button, TextField, Typography } from "@mui/material"
+import { Box, TextField, Typography } from "@mui/material"
 import { useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 import { useAppDispatch } from "../../state/hooks"
@@ -16,6 +16,11 @@ type FormValues = {
 
 interface setHeaderType {
     setHeader: React.Dispatch<React.SetStateAction<boolean>>
+}
+
+const statusColors = {
+    success: "#66bb6a",
+    error: "#f44336",
 }
 
 export default function Form({ setHeader }: setHeaderType) {
@@ -50,8 +55,9 @@ export default function Form({ setHeader }: setHeaderType) {
             setBtnLoading(() => false)
             navigate("/")
         } else {
+            const message = await loginResponse.json()
             setBtnLoading(() => false)
-            setMessage("Login not successful !")
+            setMessage(() => message.errorMessage)
         }
     }
 
@@ -65,9 +71,19 @@ export default function Form({ setHeader }: setHeaderType) {
             }
         )
 
-        const registeredUser = await registerUserResponse.json()
+        setBtnLoading(() => true)
+        await timeout(2000)
 
-        if (registeredUser) setPageType("login")
+        if (registerUserResponse.ok) {
+            setMessage(() => "Register Successful")
+            await timeout(2000)
+            setBtnLoading(() => false)
+            setPageType("login")
+        } else {
+            const message = await registerUserResponse.json()
+            setMessage(() => message.errorMessage)
+            setBtnLoading(() => false)
+        }
     }
 
     const handleFormSubmit = (formData: FormValues) => {
@@ -81,147 +97,156 @@ export default function Form({ setHeader }: setHeaderType) {
 
     useEffect(() => {
         setHeader(() => isLogin)
+        setMessage(() => "")
     }, [pageType, setHeader, isLogin])
 
     return (
-        <form onSubmit={handleSubmit((data) => handleFormSubmit(data))}>
-            <Box
-                display="grid"
-                gap="25px"
-                gridTemplateColumns="repeat(4, minmax(0, 200px))"
-            >
-                {/* Check if Login is true and show Login Page */}
-                {isLogin ? (
-                    <>
-                        <Typography
-                            fontWeight="bold"
-                            fontSize="32px"
-                            color="primary"
-                        >
-                            {message}
-                        </Typography>
-                        <TextField
-                            {...register("email")}
-                            variant="outlined"
-                            id="email"
-                            label="Email Address"
-                            name="email"
-                            type="email"
-                            required
-                            autoComplete="email"
-                            autoFocus
-                            sx={{ gridColumn: "2/4" }}
-                        />
-                        <TextField
-                            {...register("password")}
-                            variant="outlined"
-                            id="password"
-                            label="Password"
-                            name="password"
-                            type="password"
-                            required
-                            autoComplete="off"
-                            sx={{ gridColumn: "2/4" }}
-                        />
-                    </>
-                ) : (
-                    // Else Show Register Page
-                    <>
-                        <TextField
-                            {...register("username")}
-                            variant="outlined"
-                            id="username"
-                            label="Username"
-                            name="username"
-                            required
-                            autoComplete="username"
-                            sx={{ gridColumn: "2/4" }}
-                        />
-                        <TextField
-                            {...register("email")}
-                            variant="outlined"
-                            id="email"
-                            label="Email Address"
-                            name="email"
-                            type="email"
-                            required
-                            autoComplete="email"
-                            sx={{ gridColumn: "2/4" }}
-                        />
-                        <TextField
-                            {...register("phone")}
-                            variant="outlined"
-                            id="phone"
-                            label="Phone"
-                            name="phone"
-                            autoComplete="phone"
-                            sx={{ gridColumn: "2/4" }}
-                        />
-                        <TextField
-                            {...register("password")}
-                            variant="outlined"
-                            id="password"
-                            label="Password"
-                            name="password"
-                            type="password"
-                            required
-                            autoComplete="off"
-                            sx={{ gridColumn: "2/4" }}
-                        />
-                        <TextField
-                            {...register("r_password")}
-                            variant="outlined"
-                            id="r_password"
-                            label="Password"
-                            name="r_password"
-                            type="password"
-                            required
-                            autoComplete="off"
-                            sx={{ gridColumn: "2/4" }}
-                        />
-                    </>
-                )}
-            </Box>
-
-            {/* BUTTONS */}
-            <Box
+        <>
+            <Typography
+                fontWeight="bold"
+                fontSize="1.25rem"
+                mb={"1.5rem"}
                 sx={{
-                    display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "center",
-                    alignItems: "center",
+                    color:
+                        message.split(" ")[1] === "Successful"
+                            ? statusColors["success"]
+                            : statusColors["error"],
                 }}
             >
-                <LoadingButton
-                    loading={btnLoading}
-                    type="submit"
-                    fullWidth
-                    variant="contained"
-                    color="primary"
+                {message}
+            </Typography>
+            <form onSubmit={handleSubmit((data) => handleFormSubmit(data))}>
+                <Box
+                    display="grid"
+                    gap="25px"
+                    gridTemplateColumns="repeat(4, minmax(0, 200px))"
+                >
+                    {/* Check if Login is true and show Login Page */}
+                    {isLogin ? (
+                        <>
+                            <TextField
+                                {...register("email")}
+                                variant="outlined"
+                                id="email"
+                                label="Email Address"
+                                name="email"
+                                type="email"
+                                required
+                                autoComplete="email"
+                                autoFocus
+                                sx={{ gridColumn: "2/4" }}
+                            />
+                            <TextField
+                                {...register("password")}
+                                variant="outlined"
+                                id="password"
+                                label="Password"
+                                name="password"
+                                type="password"
+                                required
+                                autoComplete="off"
+                                sx={{ gridColumn: "2/4" }}
+                            />
+                        </>
+                    ) : (
+                        // Else Show Register Page
+                        <>
+                            <TextField
+                                {...register("username")}
+                                variant="outlined"
+                                id="username"
+                                label="Username"
+                                name="username"
+                                required
+                                autoComplete="username"
+                                sx={{ gridColumn: "2/4" }}
+                            />
+                            <TextField
+                                {...register("email")}
+                                variant="outlined"
+                                id="email"
+                                label="Email Address"
+                                name="email"
+                                type="email"
+                                required
+                                autoComplete="email"
+                                sx={{ gridColumn: "2/4" }}
+                            />
+                            <TextField
+                                {...register("phone")}
+                                variant="outlined"
+                                id="phone"
+                                label="Phone"
+                                name="phone"
+                                autoComplete="phone"
+                                sx={{ gridColumn: "2/4" }}
+                            />
+                            <TextField
+                                {...register("password")}
+                                variant="outlined"
+                                id="password"
+                                label="Password"
+                                name="password"
+                                type="password"
+                                required
+                                autoComplete="off"
+                                sx={{ gridColumn: "2/4" }}
+                            />
+                            <TextField
+                                {...register("r_password")}
+                                variant="outlined"
+                                id="r_password"
+                                label="Password"
+                                name="r_password"
+                                type="password"
+                                required
+                                autoComplete="off"
+                                sx={{ gridColumn: "2/4" }}
+                            />
+                        </>
+                    )}
+                </Box>
+
+                {/* BUTTONS */}
+                <Box
                     sx={{
-                        m: "2rem 0",
-                        width: "40%",
+                        display: "flex",
+                        flexDirection: "column",
+                        justifyContent: "center",
+                        alignItems: "center",
                     }}
                 >
-                    {isLogin ? "LOGIN" : "REGISTER"}
-                </LoadingButton>
-                <Typography
-                    onClick={() => {
-                        setPageType(isLogin ? "register" : "login"), reset()
-                    }}
-                    sx={{
-                        textDecoration: "underline",
-                        "&:hover": {
-                            color: "red",
-                            cursor: "pointer",
-                        },
-                    }}
-                >
-                    {isLogin
-                        ? "Don't have an account? Sign Up here."
-                        : "Already have an account? Login here."}
-                </Typography>
-            </Box>
-        </form>
+                    <LoadingButton
+                        loading={btnLoading}
+                        type="submit"
+                        fullWidth
+                        variant="contained"
+                        color="primary"
+                        sx={{
+                            m: "2rem 0",
+                            width: "40%",
+                        }}
+                    >
+                        {isLogin ? "LOGIN" : "REGISTER"}
+                    </LoadingButton>
+                    <Typography
+                        onClick={() => {
+                            setPageType(isLogin ? "register" : "login"), reset()
+                        }}
+                        sx={{
+                            textDecoration: "underline",
+                            "&:hover": {
+                                color: "red",
+                                cursor: "pointer",
+                            },
+                        }}
+                    >
+                        {isLogin
+                            ? "Don't have an account? Sign Up here."
+                            : "Already have an account? Login here."}
+                    </Typography>
+                </Box>
+            </form>
+        </>
     )
 }
