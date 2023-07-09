@@ -7,6 +7,7 @@ import path from "path"
 import multer from "multer"
 import "dotenv/config"
 import mongoose from "mongoose"
+import { register } from "./controllers/auth"
 
 // Routes
 import { authRoutes } from "./routes/auth"
@@ -38,20 +39,23 @@ app.use(cors())
 // set the directory where we save the files
 app.use("/assets", express.static(path.join(__dirname, "public/assets")))
 
+// TODO FILENAME DISsapears from reequest
+
 // setup multer location of the storage for files, and name
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
         cb(null, "public/assets")
     },
     filename: function (req, file, cb) {
-        cb(null, file.fieldname)
+        cb(null, file.originalname)
     },
 })
 // setup the middleware
-const upload = multer({ storage: storage })
+export const upload = multer({ storage: storage })
 
 // app.post("/auth/register", register)
-
+// app.post("/auth/register", upload.single("picture"), register)
+app.post("/auth/register", upload.single("picture"), register)
 app.use("/auth", authRoutes)
 app.use("/user", userRoutes)
 

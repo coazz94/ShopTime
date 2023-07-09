@@ -9,26 +9,29 @@ type RegisterData = {
     phone: number
     password: string
     r_password: string
+    picture: string
 }
 
 export async function register(req: Request, res: Response) {
     try {
-        const { username, email, phone, password, r_password } = <RegisterData>(
-            req.body
-        )
-        if (password !== r_password)
-            res.status(403).json({ errorMessage: "passwords didn't matched" })
-        const salt: string = bcrypt.genSaltSync(10)
-        const hash: string = bcrypt.hashSync(password, salt)
-        const newUser = new User({
-            username,
-            email,
-            password: hash,
-            phone,
-            lastOnline: new Date(),
-        })
-        const savedUser = await newUser.save()
-        res.status(201).json(savedUser)
+        const { username, email, phone, password, r_password, picture } = <
+            RegisterData
+        >req.body
+
+        // if (password !== r_password)
+        //     res.status(403).json({ errorMessage: "passwords didn't matched" })
+        // const salt: string = bcrypt.genSaltSync(10)
+        // const hash: string = bcrypt.hashSync(password, salt)
+        // const newUser = new User({
+        //     username,
+        //     email,
+        //     password: hash,
+        //     phone,
+        //     lastOnline: new Date(),
+        // })
+
+        // const savedUser = await newUser.save()
+        res.status(201).json(req.body)
     } catch (error) {
         console.log(error)
     }

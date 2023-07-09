@@ -5,6 +5,7 @@ import { useAppDispatch } from "../../state/hooks"
 import { setLogin } from "../../state"
 import { useNavigate } from "react-router-dom"
 import { LoadingButton } from "@mui/lab"
+import Basic from "./dropZone"
 
 type FormValues = {
     email: string
@@ -12,6 +13,7 @@ type FormValues = {
     username: string
     phone: number
     r_password: string
+    picture: File | null
 }
 
 interface setHeaderType {
@@ -27,6 +29,7 @@ export default function Form({ setHeader }: setHeaderType) {
     const [pageType, setPageType] = useState<string>("login")
     const [message, setMessage] = useState<string>("")
     const [btnLoading, setBtnLoading] = useState<boolean>(false)
+    const [profileImage, setProfileImage] = useState<File | null>(null)
     const isLogin: boolean = pageType === "login"
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
@@ -62,27 +65,44 @@ export default function Form({ setHeader }: setHeaderType) {
     }
 
     const registerUser = async (data: FormValues) => {
-        const registerUserResponse = await fetch(
-            "http://localhost:3000/auth/register",
-            {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(data),
+        // setBtnLoading(() => true)
+
+        const formData = new FormData()
+
+        for (const [key, value] of Object.entries(data)) {
+            formData.append(key, value)
+        }
+
+        formData.append("picture", profileImage)
+
+        try {
+            const registerUserResponse = await fetch(
+                "http://localhost:3000/auth/register",
+                {
+                    method: "POST",
+                    body: formData,
+                }
+            )
+
+            // await timeout(2000)
+
+            if (registerUserResponse.ok) {
+                const message = await registerUserResponse.json()
+
+                console.log(message)
+
+                // setMessage(() => "Register Successful")
+                // await timeout(2000)
+                setBtnLoading(() => false)
+                // setPageType("login")
+            } else {
+                const message = await registerUserResponse.json()
+                console.log(message)
+                setMessage(() => message.errorMessage)
+                setBtnLoading(() => false)
             }
-        )
-
-        setBtnLoading(() => true)
-        await timeout(2000)
-
-        if (registerUserResponse.ok) {
-            setMessage(() => "Register Successful")
-            await timeout(2000)
-            setBtnLoading(() => false)
-            setPageType("login")
-        } else {
-            const message = await registerUserResponse.json()
-            setMessage(() => message.errorMessage)
-            setBtnLoading(() => false)
+        } catch (error) {
+            setMessage(() => "Server unavailable")
         }
     }
 
@@ -90,6 +110,8 @@ export default function Form({ setHeader }: setHeaderType) {
         if (isLogin) loginUser(formData)
         if (!isLogin) registerUser(formData)
     }
+
+    // const getDropzone = (file: File): void => setProfileImage(() => file)
 
     const timeout = (delay: number) => {
         return new Promise((res) => setTimeout(res, delay))
@@ -203,6 +225,7 @@ export default function Form({ setHeader }: setHeaderType) {
                                 autoComplete="off"
                                 sx={{ gridColumn: "2/4" }}
                             />
+                            <Basic getDropzone={setProfileImage} />
                         </>
                     )}
                 </Box>
