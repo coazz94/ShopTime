@@ -65,15 +65,17 @@ export default function Form({ setHeader }: setHeaderType) {
     }
 
     const registerUser = async (data: FormValues) => {
-        // setBtnLoading(() => true)
+        setBtnLoading(() => true)
 
         const formData = new FormData()
 
         for (const [key, value] of Object.entries(data)) {
-            formData.append(key, value)
+            formData.append(key, JSON.stringify(value))
         }
 
-        formData.append("picture", profileImage)
+        // append the file and the path to the Formdata
+        formData.append("picture[]", JSON.stringify(profileImage))
+        formData.append("picturePath", JSON.stringify(profileImage?.name))
 
         try {
             const registerUserResponse = await fetch(
@@ -84,17 +86,13 @@ export default function Form({ setHeader }: setHeaderType) {
                 }
             )
 
-            // await timeout(2000)
+            await timeout(2000)
 
             if (registerUserResponse.ok) {
-                const message = await registerUserResponse.json()
-
-                console.log(message)
-
-                // setMessage(() => "Register Successful")
-                // await timeout(2000)
+                setMessage(() => "Register Successful")
+                await timeout(2000)
                 setBtnLoading(() => false)
-                // setPageType("login")
+                setPageType("login")
             } else {
                 const message = await registerUserResponse.json()
                 console.log(message)

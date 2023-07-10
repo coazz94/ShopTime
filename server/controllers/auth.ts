@@ -18,19 +18,8 @@ export async function register(req: Request, res: Response) {
             RegisterData
         >req.body
 
-        // if (password !== r_password)
-        //     res.status(403).json({ errorMessage: "passwords didn't matched" })
-        // const salt: string = bcrypt.genSaltSync(10)
-        // const hash: string = bcrypt.hashSync(password, salt)
-        // const newUser = new User({
-        //     username,
-        //     email,
-        //     password: hash,
-        //     phone,
-        //     lastOnline: new Date(),
-        // })
+        console.log(req.body)
 
-        // const savedUser = await newUser.save()
         res.status(201).json(req.body)
     } catch (error) {
         console.log(error)
@@ -64,3 +53,17 @@ export async function login(req: Request, res: Response) {
 
     res.status(201).json({ user, token })
 }
+
+// if (password !== r_password)
+//     res.status(403).json({ errorMessage: "passwords didn't matched" })
+// const salt: string = bcrypt.genSaltSync(10)
+// const hash: string = bcrypt.hashSync(password, salt)
+// const newUser = new User({
+//     username,
+//     email,
+//     password: hash,
+//     phone,
+//     lastOnline: new Date(),
+// })
+
+// const savedUser = await newUser.save()
