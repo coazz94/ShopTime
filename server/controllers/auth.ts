@@ -6,21 +6,35 @@ import User from "../models/User"
 type RegisterData = {
     username: string
     email: string
-    phone: number
+    phone: string
     password: string
     r_password: string
-    picture: string
+    picturePath: string
 }
 
 export async function register(req: Request, res: Response) {
     try {
-        const { username, email, phone, password, r_password, picture } = <
+        const { username, email, phone, password, r_password, picturePath } = <
             RegisterData
         >req.body
 
-        console.log(req.body)
+        if (password !== r_password)
+            res.status(403).json({ errorMessage: "passwords didn't matched" })
+        // Add salt and hash the password
+        const salt: string = bcrypt.genSaltSync(10)
+        const hash: string = bcrypt.hashSync(password, salt)
+        const newUser = new User({
+            username,
+            email,
+            password: hash,
+            phone,
+            lastOnline: new Date(),
+            picturePath: picturePath,
+        })
 
-        res.status(201).json(req.body)
+        const savedUser = await newUser.save()
+
+        res.status(201).json(savedUser)
     } catch (error) {
         console.log(error)
     }
@@ -31,6 +45,7 @@ export async function login(req: Request, res: Response) {
 
     // Try to find the user
     const user = await User.findOne({ email })
+
     // if user doesn't exists return error
     if (!user) return res.status(404).json({ errorMessage: "User not found" })
 
@@ -44,7 +59,7 @@ export async function login(req: Request, res: Response) {
     if (process.env.JWT_SECRET === undefined)
         return res
             .status(404)
-            .json({ errorMessage: "JWT_SECRET wasn't available" })
+            .json({ errorMessage: "Server side Error, Contact Helpdesk" })
 
     let token = jwt.sign({ id: user._id }, process.env.JWT_SECRET)
 
@@ -53,17 +68,3 @@ export async function login(req: Request, res: Response) {
 
     res.status(201).json({ user, token })
 }
-
-// if (password !== r_password)
-//     res.status(403).json({ errorMessage: "passwords didn't matched" })
-// const salt: string = bcrypt.genSaltSync(10)
-// const hash: string = bcrypt.hashSync(password, salt)
-// const newUser = new User({
-//     username,
-//     email,
-//     password: hash,
-//     phone,
-//     lastOnline: new Date(),
-// })
-
-// const savedUser = await newUser.save()

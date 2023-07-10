@@ -11,6 +11,7 @@ const LoginPage = () => {
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
+                mt: "3rem",
             }}
         >
             <Box p="1rem 6%" textAlign="center">
@@ -19,7 +20,7 @@ const LoginPage = () => {
                 </Typography>
             </Box>
 
-            <Box m="2rem auto" borderRadius="1.5rem">
+            <Box m="1rem auto" borderRadius="1.5rem">
                 <Typography fontWeight="500" variant="h5">
                     Welcome to ShopTime, the best Selling Place in the World!
                 </Typography>

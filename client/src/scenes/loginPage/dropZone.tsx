@@ -1,7 +1,7 @@
 import { Box } from "@mui/material"
 import { useDropzone, FileWithPath } from "react-dropzone"
 
-export default function Basic({
+export default function Dropzone({
     getDropzone,
 }: {
     getDropzone: React.Dispatch<React.SetStateAction<File | null>>
@@ -25,11 +25,12 @@ export default function Basic({
     return (
         <Box
             {...getRootProps()}
-            border={`2px dashed`}
+            border={`2px dashed gray`}
             p="1rem"
-            width="20rem"
+            width="100%"
             display="flex"
             justifyContent="center"
+            color="gray"
             sx={{
                 "&:hover": {
                     cursor: "pointer",

@@ -59,14 +59,16 @@ app.use("/auth", authRoutes)
 app.use("/user", userRoutes)
 
 // connect to the mongodb database, use `` for the URI In typescript !
-// mongoose
-//     .connect(`${process.env.MONGO_URI}`)
-//     .then(() => {
-//         app.listen(PORT, () =>
-//             console.log(`Server is Running on Port: ${PORT}`)
-//         )
-//         // User.insertMany(users)
-//     })
-//     .catch((error) => console.log(`${error} did not connect`))
+mongoose
+    .connect(`${process.env.MONGO_URI}`)
+    .then(() => {
+        app.listen(PORT, () =>
+            console.log(
+                `Mongo is connected, Server is Running on Port: ${PORT}`
+            )
+        )
+        // User.insertMany(users)
+    })
+    .catch((error) => console.log(`${error} did not connect`))
 
-app.listen(PORT, () => console.log("listening"))
+// app.listen(PORT, () => console.log("listening"))

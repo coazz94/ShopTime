@@ -5,7 +5,7 @@ import { useAppDispatch } from "../../state/hooks"
 import { setLogin } from "../../state"
 import { useNavigate } from "react-router-dom"
 import { LoadingButton } from "@mui/lab"
-import Basic from "./dropZone"
+import Dropzone from "./dropZone"
 
 type FormValues = {
     email: string
@@ -13,7 +13,6 @@ type FormValues = {
     username: string
     phone: number
     r_password: string
-    picture: File | null
 }
 
 interface setHeaderType {
@@ -41,6 +40,8 @@ export default function Form({ setHeader }: setHeaderType) {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(formData),
         })
+
+        console.log(formData)
 
         setBtnLoading(() => true)
         await timeout(2000)
@@ -70,12 +71,14 @@ export default function Form({ setHeader }: setHeaderType) {
         const formData = new FormData()
 
         for (const [key, value] of Object.entries(data)) {
-            formData.append(key, JSON.stringify(value))
+            formData.append(key, value)
         }
 
         // append the file and the path to the Formdata
-        formData.append("picture[]", JSON.stringify(profileImage))
-        formData.append("picturePath", JSON.stringify(profileImage?.name))
+        if (profileImage) {
+            formData.append("picturePath", profileImage.name)
+            formData.append("picture", profileImage)
+        }
 
         try {
             const registerUserResponse = await fetch(
@@ -108,8 +111,6 @@ export default function Form({ setHeader }: setHeaderType) {
         if (isLogin) loginUser(formData)
         if (!isLogin) registerUser(formData)
     }
-
-    // const getDropzone = (file: File): void => setProfileImage(() => file)
 
     const timeout = (delay: number) => {
         return new Promise((res) => setTimeout(res, delay))
@@ -223,7 +224,9 @@ export default function Form({ setHeader }: setHeaderType) {
                                 autoComplete="off"
                                 sx={{ gridColumn: "2/4" }}
                             />
-                            <Basic getDropzone={setProfileImage} />
+                            <Box sx={{ gridColumn: "2/4" }}>
+                                <Dropzone getDropzone={setProfileImage} />
+                            </Box>
                         </>
                     )}
                 </Box>
@@ -244,7 +247,8 @@ export default function Form({ setHeader }: setHeaderType) {
                         variant="contained"
                         color="primary"
                         sx={{
-                            m: "2rem 0",
+                            m: "2.5rem ",
+                            mb: "0.8rem",
                             width: "40%",
                         }}
                     >

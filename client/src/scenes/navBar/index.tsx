@@ -246,9 +246,7 @@ function Navbar({ logoutUser, isAuth }: NavbarProps) {
                                     onClick={handleOpenUserMenu}
                                     sx={{ p: 0, mr: { xs: 0, md: 6 } }}
                                 >
-                                    <Avatar
-                                    // src="/static/images/avatar/2.jpg"
-                                    />
+                                    <Avatar src="public\assets\rocket.png" />
                                 </IconButton>
                             </Tooltip>
 
