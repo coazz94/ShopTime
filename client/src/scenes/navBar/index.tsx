@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect } from "react"
 import CssBaseline from "@mui/material/CssBaseline"
 import MenuIcon from "@mui/icons-material/Menu"
 import ShoppingBasketIcon from "@mui/icons-material/ShoppingBasket"
@@ -27,9 +27,12 @@ const pageLinks = [
 type NavbarProps = {
     logoutUser: () => void
     isAuth: boolean
+    profilePicture: string | null
 }
 
-function Navbar({ logoutUser, isAuth }: NavbarProps) {
+function Navbar({ logoutUser, isAuth, profilePicture }: NavbarProps) {
+    // https://stackoverflow.com/questions/66752876/reactjs-cannot-display-image-from-backend-folder-using-node-js
+
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
         null
     )
@@ -246,7 +249,13 @@ function Navbar({ logoutUser, isAuth }: NavbarProps) {
                                     onClick={handleOpenUserMenu}
                                     sx={{ p: 0, mr: { xs: 0, md: 6 } }}
                                 >
-                                    <Avatar src="public\assets\rocket.png" />
+                                    <Avatar
+                                        sx={{
+                                            width: "3rem",
+                                            height: "3rem",
+                                        }}
+                                        src={`http://localhost:3000/assets/${profilePicture}`}
+                                    />
                                 </IconButton>
                             </Tooltip>
 

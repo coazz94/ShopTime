@@ -49,10 +49,12 @@ export default function Form({ setHeader }: setHeaderType) {
         if (loginResponse.ok) {
             setMessage(() => "Login Successful")
             const loggedIn = await loginResponse.json()
+            console.log(loggedIn)
             dispatch(
                 setLogin({
                     user: loggedIn.user._id,
                     token: loggedIn.token,
+                    picturePath: loggedIn.user.picturePath,
                 })
             )
             await timeout(2000)

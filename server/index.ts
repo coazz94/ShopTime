@@ -12,8 +12,6 @@ import { register } from "./controllers/auth"
 // Routes
 import { authRoutes } from "./routes/auth"
 import { userRoutes } from "./routes/user"
-import User from "./models/User"
-import { users } from "./data"
 
 const PORT = process.env.PORT || 3001
 
@@ -37,14 +35,13 @@ app.use(bodyParser.json({ limit: "30mb" }))
 app.use(cors())
 
 // set the directory where we save the files
+// __dirname will be in the dist folder due to TS
 app.use("/assets", express.static(path.join(__dirname, "public/assets")))
-
-// TODO FILENAME DISsapears from reequest
 
 // setup multer location of the storage for files, and name
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, "public/assets")
+        cb(null, "dist/public/assets")
     },
     filename: function (req, file, cb) {
         cb(null, file.originalname)
@@ -71,4 +68,4 @@ mongoose
     })
     .catch((error) => console.log(`${error} did not connect`))
 
-// app.listen(PORT, () => console.log("listening"))
+// app.listen(PORT, () => console.log("listening on Port: ", PORT))

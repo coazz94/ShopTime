@@ -14,6 +14,7 @@ import ProductPage from "./scenes/productsPage"
 function App() {
     const dispatch = useAppDispatch()
     const user = useAppSelector((state) => state.user)
+    const profilePicture = useAppSelector((state) => state.picturePath)
     const isAuth = user !== null ? true : false
 
     const logoutUser = () => {
@@ -23,7 +24,11 @@ function App() {
     return (
         <>
             <BrowserRouter>
-                <Navbar logoutUser={logoutUser} isAuth={isAuth} />
+                <Navbar
+                    logoutUser={logoutUser}
+                    isAuth={isAuth}
+                    profilePicture={profilePicture}
+                />
                 <Routes>
                     <Route path="/" element={<Homepage />} />
                     <Route path="/products" element={<ProductOverview />} />
