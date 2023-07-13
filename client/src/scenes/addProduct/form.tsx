@@ -33,7 +33,7 @@ export default function Form() {
                     gridTemplateColumns="repeat(4, minmax(0, 200px))"
                 >
                     <TextField
-                        {...register("username")}
+                        {...register("usernae")}
                         variant="outlined"
                         id="username"
                         label="Username"
