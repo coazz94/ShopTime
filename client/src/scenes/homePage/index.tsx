@@ -2,13 +2,11 @@ import {
     Box,
     Button,
     Card,
-    CardActions,
     CardContent,
     CardMedia,
     Divider,
     Typography,
 } from "@mui/material"
-// import SwipeableTextMobileStepper from "./swipeProducts"
 
 export default function Homepage() {
     return (

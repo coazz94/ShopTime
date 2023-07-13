@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect } from "react"
 import CssBaseline from "@mui/material/CssBaseline"
 import MenuIcon from "@mui/icons-material/Menu"
 import ShoppingBasketIcon from "@mui/icons-material/ShoppingBasket"
@@ -23,9 +23,16 @@ const pageLinks = [
     { link: "/products", page: "Products" },
     { link: "/contact-info", page: "Contact" },
 ]
-// const settings = ["Account", "Logout"]
 
-function Navbar() {
+type NavbarProps = {
+    logoutUser: () => void
+    isAuth: boolean
+    profilePicture: string | null
+}
+
+function Navbar({ logoutUser, isAuth, profilePicture }: NavbarProps) {
+    // https://stackoverflow.com/questions/66752876/reactjs-cannot-display-image-from-backend-folder-using-node-js
+
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
         null
     )
@@ -33,19 +40,15 @@ function Navbar() {
         null
     )
 
-    const isAuth = false
-
     const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorElNav(event.currentTarget)
     }
     const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorElUser(event.currentTarget)
     }
-
     const handleCloseNavMenu = () => {
         setAnchorElNav(null)
     }
-
     const handleCloseUserMenu = () => {
         setAnchorElUser(null)
     }
@@ -208,7 +211,6 @@ function Navbar() {
                         >
                             ShopTime
                         </Typography>
-
                         <Box
                             sx={{
                                 flexGrow: 1,
@@ -232,6 +234,22 @@ function Navbar() {
                                 </Button>
                             ))}
                         </Box>
+                        {/* Post a new Product button, show only when user logged In */}
+                        {isAuth && (
+                            <Button
+                                component={Link}
+                                to={"/product/add-Product"}
+                                variant="contained"
+                                color="primary"
+                                sx={{
+                                    fontSize: "0.8rem",
+                                    mr: "2rem",
+                                }}
+                            >
+                                post a new Product
+                            </Button>
+                        )}
+
                         <Box
                             sx={{
                                 display: "flex",
@@ -247,7 +265,11 @@ function Navbar() {
                                     sx={{ p: 0, mr: { xs: 0, md: 6 } }}
                                 >
                                     <Avatar
-                                    // src="/static/images/avatar/2.jpg"
+                                        sx={{
+                                            width: "3rem",
+                                            height: "3rem",
+                                        }}
+                                        src={`http://localhost:3000/assets/${profilePicture}`}
                                     />
                                 </IconButton>
                             </Tooltip>
@@ -328,16 +350,29 @@ function Navbar() {
                                     key={"account2"}
                                     onClick={handleCloseUserMenu}
                                 >
-                                    <MuiLink
-                                        sx={{
-                                            fontFamily: "Arial",
-                                            color: "#2C3E50",
-                                            textDecoration: "none",
-                                        }}
-                                        href="/login"
-                                    >
-                                        {isAuth ? "Logout" : "Login"}
-                                    </MuiLink>
+                                    {isAuth ? (
+                                        <MuiLink
+                                            sx={{
+                                                fontFamily: "Arial",
+                                                color: "#2C3E50",
+                                                textDecoration: "none",
+                                            }}
+                                            onClick={logoutUser}
+                                        >
+                                            Logout
+                                        </MuiLink>
+                                    ) : (
+                                        <MuiLink
+                                            sx={{
+                                                fontFamily: "Arial",
+                                                color: "#2C3E50",
+                                                textDecoration: "none",
+                                            }}
+                                            href="/login"
+                                        >
+                                            Login
+                                        </MuiLink>
+                                    )}
                                 </MenuItem>
                             </Menu>
                         </Box>

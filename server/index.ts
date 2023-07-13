@@ -7,12 +7,12 @@ import path from "path"
 import multer from "multer"
 import "dotenv/config"
 import mongoose from "mongoose"
+import { register } from "./controllers/auth"
 
 // Routes
 import { authRoutes } from "./routes/auth"
 import { userRoutes } from "./routes/user"
-import User from "./models/User"
-import { users } from "./data"
+import { productRoutes } from "./routes/product"
 
 const PORT = process.env.PORT || 3001
 
@@ -36,32 +36,38 @@ app.use(bodyParser.json({ limit: "30mb" }))
 app.use(cors())
 
 // set the directory where we save the files
+// __dirname will be in the dist folder due to TS
 app.use("/assets", express.static(path.join(__dirname, "public/assets")))
 
 // setup multer location of the storage for files, and name
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, "public/assets")
+        cb(null, "dist/public/assets")
     },
     filename: function (req, file, cb) {
-        cb(null, file.fieldname)
+        cb(null, file.originalname)
     },
 })
 // setup the middleware
-const upload = multer({ storage: storage })
+export const upload = multer({ storage: storage })
 
-// app.post("/auth/register", register)
-
+// app.post("/auth/register", upload.single("picture"), register)
+app.post("/auth/register", upload.single("picture"), register)
 app.use("/auth", authRoutes)
-app.use("/users", userRoutes)
+app.use("/user", userRoutes)
+app.use("/product", productRoutes)
 
 // connect to the mongodb database, use `` for the URI In typescript !
 mongoose
     .connect(`${process.env.MONGO_URI}`)
     .then(() => {
         app.listen(PORT, () =>
-            console.log(`Server is Running on Port: ${PORT}`)
+            console.log(
+                `Mongo is connected, Server is Running on Port: ${PORT}`
+            )
         )
         // User.insertMany(users)
     })
     .catch((error) => console.log(`${error} did not connect`))
+
+// app.listen(PORT, () => console.log("listening on Port: ", PORT))
