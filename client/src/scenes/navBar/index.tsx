@@ -211,7 +211,6 @@ function Navbar({ logoutUser, isAuth, profilePicture }: NavbarProps) {
                         >
                             ShopTime
                         </Typography>
-
                         <Box
                             sx={{
                                 flexGrow: 1,
@@ -235,6 +234,22 @@ function Navbar({ logoutUser, isAuth, profilePicture }: NavbarProps) {
                                 </Button>
                             ))}
                         </Box>
+                        {/* Post a new Product button, show only when user logged In */}
+                        {isAuth && (
+                            <Button
+                                component={Link}
+                                to={"/product/add-Product"}
+                                variant="contained"
+                                color="primary"
+                                sx={{
+                                    fontSize: "0.8rem",
+                                    mr: "2rem",
+                                }}
+                            >
+                                post a new Product
+                            </Button>
+                        )}
+
                         <Box
                             sx={{
                                 display: "flex",

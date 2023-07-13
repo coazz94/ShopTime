@@ -10,6 +10,7 @@ import { useAppDispatch, useAppSelector } from "./state/hooks"
 import { setLogout } from "./state"
 import ErrorPage from "./scenes/errorPage"
 import ProductPage from "./scenes/productsPage"
+import AddProduct from "./scenes/addProduct"
 
 function App() {
     const dispatch = useAppDispatch()
@@ -33,6 +34,10 @@ function App() {
                     <Route path="/" element={<Homepage />} />
                     <Route path="/products" element={<ProductOverview />} />
                     <Route path="/products/:id" element={<ProductPage />} />
+                    <Route
+                        path="/product/add-Product"
+                        element={<AddProduct />}
+                    />
                     <Route path="/login" element={<LoginPage />} />
                     <Route path="/contact-info" element={<ContactPage />} />
                     <Route path="/cart" element={<CartPage />} />

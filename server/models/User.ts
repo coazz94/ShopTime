@@ -1,9 +1,7 @@
-import mongoose, { Schema, InferSchemaType, mongo } from "mongoose"
-
-// set the type for the User
-// type User = InferSchemaType<typeof userSchema>
+import mongoose, { Schema, Types } from "mongoose"
 
 export interface UserSchema {
+    _id: Types.ObjectId
     username: string
     email: string
     password: string
@@ -12,8 +10,13 @@ export interface UserSchema {
     picturePath: string
 }
 
+// https://stackoverflow.com/questions/18001478/referencing-another-schema-in-mongoose
+
+// give every user a userId
+
 const userSchema = new Schema<UserSchema>(
     {
+        _id: { type: mongoose.Schema.Types.ObjectId },
         username: { type: String, required: true, max: 12, min: 4 },
         email: { type: String, required: true, max: 50, min: 10 },
         password: { type: String, required: true, min: 5 },

@@ -12,6 +12,7 @@ import { register } from "./controllers/auth"
 // Routes
 import { authRoutes } from "./routes/auth"
 import { userRoutes } from "./routes/user"
+import { productRoutes } from "./routes/product"
 
 const PORT = process.env.PORT || 3001
 
@@ -54,6 +55,7 @@ export const upload = multer({ storage: storage })
 app.post("/auth/register", upload.single("picture"), register)
 app.use("/auth", authRoutes)
 app.use("/user", userRoutes)
+app.use("/product", productRoutes)
 
 // connect to the mongodb database, use `` for the URI In typescript !
 mongoose
