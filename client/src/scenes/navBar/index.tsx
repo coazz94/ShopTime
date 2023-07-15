@@ -269,7 +269,11 @@ function Navbar({ logoutUser, isAuth, profilePicture }: NavbarProps) {
                                             width: "3rem",
                                             height: "3rem",
                                         }}
-                                        src={`http://localhost:3000/assets/${profilePicture}`}
+                                        src={
+                                            isAuth
+                                                ? `http://localhost:3000/assets/${profilePicture}`
+                                                : ""
+                                        }
                                     />
                                 </IconButton>
                             </Tooltip>

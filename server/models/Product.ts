@@ -8,7 +8,7 @@ export interface ProductSchema {
     productName: string
     description: string
     picturePath: string
-    brand: string
+    category: string
     price: Types.Decimal128
     status: string
     sold: boolean
@@ -24,7 +24,7 @@ const productSchema = new Schema({
     productName: { type: String, required: true, max: 15, min: 5 },
     description: { type: String, required: true, max: 50, min: 8 },
     picturePath: { type: String, default: "" },
-    brand: { type: String, required: true, max: 15, min: 4 },
+    category: { type: String, required: true, max: 15, min: 4 },
     price: { type: Types.Decimal128, required: true },
     status: { type: String, required: true },
     sold: { type: Boolean, required: true },

@@ -36,7 +36,9 @@ export async function register(req: Request, res: Response) {
 
         res.status(201).json(savedUser)
     } catch (error) {
-        console.log(error)
+        res.status(404).json({
+            errorMessage: "User not created, internal Error",
+        })
     }
 }
 

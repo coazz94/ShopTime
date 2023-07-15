@@ -18,17 +18,20 @@ import { useState } from "react"
 type FormValues = {
     productName: string
     description: string
+    category: string
     price: number
     status: string
 }
 
 import { statusColors } from "../loginPage/form"
+import { useAppSelector } from "../../state/hooks"
 
 export default function Form() {
     const { register, handleSubmit } = useForm<FormValues>()
     const [message, setMessage] = useState<string>("")
     const [productPicture, setProductPicture] = useState<File | null>(null)
     const [btnLoading, setBtnLoading] = useState<boolean>(false)
+    const user = useAppSelector((state) => state.user)
     const status = [
         {
             value: "new",
@@ -45,6 +48,36 @@ export default function Form() {
         {
             value: "damaged",
             label: "Damaged",
+        },
+    ]
+    const categories = [
+        {
+            value: "art",
+            label: "Art",
+        },
+        {
+            value: "book",
+            label: "Books",
+        },
+        {
+            value: "electronic",
+            label: "Electronics",
+        },
+        {
+            value: "living",
+            label: "Living",
+        },
+        {
+            value: "wellness",
+            label: "Wellness",
+        },
+        {
+            value: "games",
+            label: "Games",
+        },
+        {
+            value: "smartphones",
+            label: "Smartphones",
         },
     ]
     const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
@@ -73,6 +106,10 @@ export default function Form() {
         if (productPicture) {
             formData.append("picturePath", productPicture.name)
             formData.append("picture", productPicture)
+        }
+
+        if (user) {
+            formData.append("createdBy", user)
         }
 
         try {
@@ -146,6 +183,23 @@ export default function Form() {
                         required
                         sx={{ gridColumn: "2/4" }}
                     />
+                    <TextField
+                        {...register("category")}
+                        // change all ids
+                        id="outlined-category-status"
+                        name="category"
+                        required
+                        select
+                        defaultValue="art"
+                        helperText="Category"
+                        sx={{ gridColumn: "2/4" }}
+                    >
+                        {categories.map((option) => (
+                            <MenuItem key={option.value} value={option.value}>
+                                {option.label}
+                            </MenuItem>
+                        ))}
+                    </TextField>
 
                     <FormControl variant="outlined" sx={{ gridColumn: "2/3" }}>
                         <InputLabel htmlFor="price">Price</InputLabel>

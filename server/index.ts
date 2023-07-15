@@ -4,17 +4,15 @@ import morgan from "morgan"
 import bodyParser from "body-parser"
 import cors from "cors"
 import path from "path"
-import multer from "multer"
 import "dotenv/config"
 import mongoose from "mongoose"
-import { register } from "./controllers/auth"
 
 // Routes
 import { authRoutes } from "./routes/auth"
 import { userRoutes } from "./routes/user"
 import { productRoutes } from "./routes/product"
-import { addProduct } from "./controllers/product"
 
+// Set the Port for the server
 const PORT = process.env.PORT || 3001
 
 const app = express()
@@ -40,33 +38,10 @@ app.use(cors())
 // __dirname will be in the dist folder due to TS
 app.use("/assets", express.static(path.join(__dirname, "public/assets")))
 
-// setup multer location of the storage for files, and name
-const profileStorage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, "dist/public/assets")
-    },
-    filename: function (req, file, cb) {
-        cb(null, file.originalname)
-    },
-})
-const product = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, "dist/public/assets/product")
-    },
-    filename: function (req, file, cb) {
-        cb(null, file.originalname)
-    },
-})
-// setup the middleware
-export const uploadProfilePictures = multer({ storage: profileStorage })
-export const uploadProductPictures = multer({ storage: product })
-
-// app.post("/auth/register", upload.single("picture"), register)
-app.post("/auth/register", uploadProfilePictures.single("picture"), register)
+// Routes
 app.use("/auth", authRoutes)
 app.use("/user", userRoutes)
 app.use("/product", productRoutes)
-app.use("/product/add", uploadProductPictures.single("picture"), addProduct)
 
 // connect to the mongodb database, use `` for the URI In typescript !
 mongoose

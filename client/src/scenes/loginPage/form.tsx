@@ -318,7 +318,7 @@ export default function Form({ setHeader }: setHeaderType) {
                                             </IconButton>
                                         </InputAdornment>
                                     }
-                                    label="Password"
+                                    label="Repeat Password"
                                 />
                             </FormControl>
 
