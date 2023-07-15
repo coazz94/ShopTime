@@ -34,10 +34,6 @@ function App() {
                     <Route path="/" element={<Homepage />} />
                     <Route path="/products" element={<ProductOverview />} />
                     <Route path="/products/:id" element={<ProductPage />} />
-                    <Route
-                        path="/product/add-Product"
-                        element={<AddProduct />}
-                    />
                     <Route path="/login" element={<LoginPage />} />
                     <Route path="/contact-info" element={<ContactPage />} />
                     <Route path="/cart" element={<CartPage />} />
@@ -49,6 +45,14 @@ function App() {
                         }
                     />
                     <Route path="/*" element={<ErrorPage />} />
+                    Put in here the routes that are only available for
+                    authorized user
+                    {isAuth && (
+                        <Route
+                            path="/product/add-Product"
+                            element={<AddProduct />}
+                        />
+                    )}
                 </Routes>
             </BrowserRouter>
         </>

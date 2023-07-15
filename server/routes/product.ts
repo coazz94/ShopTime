@@ -8,7 +8,7 @@ const router = express.Router()
 // get route get all products
 
 // post new product
-router.post("/add", addProduct)
+// router.post("/add", addProduct)
 
 // edit a product
 

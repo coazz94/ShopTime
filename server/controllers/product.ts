@@ -1,7 +1,9 @@
-import { Request, Response, NextFunction } from "express"
+import { Request, Response } from "express"
 
-export function addProduct(req: Request, res: Response, next: NextFunction) {
-    console.log("hey")
-    res.status(201)
-    next()
+// Handle Product Data
+// Move multer to seperate File
+
+export async function addProduct(req: Request, res: Response) {
+    console.log(req.body)
+    res.status(201).json("RESPONSE FROM BACKEND")
 }

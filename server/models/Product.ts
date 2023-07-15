@@ -1,19 +1,35 @@
 import mongoose, { Schema, Types } from "mongoose"
 
 export interface ProductSchema {
-    _id: Types.ObjectId
+    _id: {
+        type: Types.ObjectId
+        auto: boolean
+    }
     productName: string
-    test: string
+    description: string
     picturePath: string
+    brand: string
+    price: Types.Decimal128
+    status: string
     sold: boolean
+    createdBy: Types.ObjectId
+    comments: Types.ObjectId[]
 }
 
-const productSchema = new Schema<ProductSchema>({
-    _id: { type: mongoose.Schema.Types.ObjectId },
-    productName: { type: String, required: true, max: 15, min: 4 },
-    // createdby:
+const productSchema = new Schema({
+    _id: {
+        type: mongoose.Types.ObjectId,
+        auto: true,
+    },
+    productName: { type: String, required: true, max: 15, min: 5 },
+    description: { type: String, required: true, max: 50, min: 8 },
     picturePath: { type: String, default: "" },
-    sold: { type: Boolean, default: false },
+    brand: { type: String, required: true, max: 15, min: 4 },
+    price: { type: Types.Decimal128, required: true },
+    status: { type: String, required: true },
+    sold: { type: Boolean, required: true },
+    createdBy: { type: Schema.Types.ObjectId, ref: "User" },
+    comments: [{ type: Schema.Types.ObjectId, ref: "Comment" }],
 })
 
 const Product = mongoose.model("Product", productSchema)

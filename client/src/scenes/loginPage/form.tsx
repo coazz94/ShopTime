@@ -1,4 +1,13 @@
-import { Box, TextField, Typography } from "@mui/material"
+import {
+    Box,
+    FormControl,
+    IconButton,
+    InputAdornment,
+    InputLabel,
+    OutlinedInput,
+    TextField,
+    Typography,
+} from "@mui/material"
 import { useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 import { useAppDispatch } from "../../state/hooks"
@@ -6,6 +15,7 @@ import { setLogin } from "../../state"
 import { useNavigate } from "react-router-dom"
 import { LoadingButton } from "@mui/lab"
 import Dropzone from "./dropZone"
+import { Visibility, VisibilityOff } from "@mui/icons-material"
 
 type FormValues = {
     email: string
@@ -19,7 +29,7 @@ interface setHeaderType {
     setHeader: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const statusColors = {
+export const statusColors = {
     success: "#66bb6a",
     error: "#f44336",
 }
@@ -33,6 +43,16 @@ export default function Form({ setHeader }: setHeaderType) {
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
     const { register, handleSubmit, reset } = useForm<FormValues>()
+    //change to show only one password at a time
+    const [showPassword, setShowPassword] = useState<boolean>(false)
+
+    const handleClickShowPassword = () => setShowPassword((show) => !show)
+
+    const handleMouseDownPassword = (
+        event: React.MouseEvent<HTMLButtonElement>
+    ) => {
+        event.preventDefault()
+    }
 
     const loginUser = async (formData: FormValues) => {
         const loginResponse = await fetch("http://localhost:3000/auth/login", {
@@ -40,8 +60,6 @@ export default function Form({ setHeader }: setHeaderType) {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(formData),
         })
-
-        console.log(formData)
 
         setBtnLoading(() => true)
         await timeout(2000)
@@ -159,17 +177,43 @@ export default function Form({ setHeader }: setHeaderType) {
                                 autoFocus
                                 sx={{ gridColumn: "2/4" }}
                             />
-                            <TextField
-                                {...register("password")}
-                                variant="outlined"
-                                id="password"
-                                label="Password"
-                                name="password"
-                                type="password"
-                                required
-                                autoComplete="off"
+
+                            <FormControl
                                 sx={{ gridColumn: "2/4" }}
-                            />
+                                variant="outlined"
+                            >
+                                <InputLabel htmlFor="password">
+                                    Password
+                                </InputLabel>
+                                <OutlinedInput
+                                    id="password"
+                                    type={showPassword ? "text" : "password"}
+                                    {...register("password")}
+                                    required
+                                    autoComplete="off"
+                                    endAdornment={
+                                        <InputAdornment position="end">
+                                            <IconButton
+                                                aria-label="toggle password visibility"
+                                                onClick={
+                                                    handleClickShowPassword
+                                                }
+                                                onMouseDown={
+                                                    handleMouseDownPassword
+                                                }
+                                                edge="end"
+                                            >
+                                                {showPassword ? (
+                                                    <VisibilityOff />
+                                                ) : (
+                                                    <Visibility />
+                                                )}
+                                            </IconButton>
+                                        </InputAdornment>
+                                    }
+                                    label="Password"
+                                />
+                            </FormControl>
                         </>
                     ) : (
                         // Else Show Register Page
@@ -204,28 +248,80 @@ export default function Form({ setHeader }: setHeaderType) {
                                 autoComplete="phone"
                                 sx={{ gridColumn: "2/4" }}
                             />
-                            <TextField
-                                {...register("password")}
-                                variant="outlined"
-                                id="password"
-                                label="Password"
-                                name="password"
-                                type="password"
-                                required
-                                autoComplete="off"
+                            <FormControl
                                 sx={{ gridColumn: "2/4" }}
-                            />
-                            <TextField
-                                {...register("r_password")}
                                 variant="outlined"
-                                id="r_password"
-                                label="Password"
-                                name="r_password"
-                                type="password"
-                                required
-                                autoComplete="off"
+                            >
+                                <InputLabel htmlFor="password">
+                                    Password
+                                </InputLabel>
+                                <OutlinedInput
+                                    id="password"
+                                    type={showPassword ? "text" : "password"}
+                                    {...register("password")}
+                                    required
+                                    autoComplete="off"
+                                    endAdornment={
+                                        <InputAdornment position="end">
+                                            <IconButton
+                                                aria-label="toggle password visibility"
+                                                onClick={
+                                                    handleClickShowPassword
+                                                }
+                                                onMouseDown={
+                                                    handleMouseDownPassword
+                                                }
+                                                edge="end"
+                                            >
+                                                {showPassword ? (
+                                                    <VisibilityOff />
+                                                ) : (
+                                                    <Visibility />
+                                                )}
+                                            </IconButton>
+                                        </InputAdornment>
+                                    }
+                                    label="Password"
+                                />
+                            </FormControl>
+
+                            <FormControl
                                 sx={{ gridColumn: "2/4" }}
-                            />
+                                variant="outlined"
+                            >
+                                <InputLabel htmlFor="r_password">
+                                    Repeat Password
+                                </InputLabel>
+                                <OutlinedInput
+                                    id="r_password"
+                                    type={showPassword ? "text" : "password"}
+                                    {...register("r_password")}
+                                    required
+                                    autoComplete="off"
+                                    endAdornment={
+                                        <InputAdornment position="end">
+                                            <IconButton
+                                                aria-label="toggle password visibility"
+                                                onClick={
+                                                    handleClickShowPassword
+                                                }
+                                                onMouseDown={
+                                                    handleMouseDownPassword
+                                                }
+                                                edge="end"
+                                            >
+                                                {showPassword ? (
+                                                    <VisibilityOff />
+                                                ) : (
+                                                    <Visibility />
+                                                )}
+                                            </IconButton>
+                                        </InputAdornment>
+                                    }
+                                    label="Password"
+                                />
+                            </FormControl>
+
                             <Box sx={{ gridColumn: "2/4" }}>
                                 <Dropzone getDropzone={setProfileImage} />
                             </Box>

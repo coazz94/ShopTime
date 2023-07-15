@@ -12,7 +12,7 @@ export default function addProduct() {
                 // backgroundColor: "red",
             }}
         >
-            <Box p="1rem 6%" textAlign="center">
+            <Box p="1rem 6%" textAlign="center" mb="1rem">
                 <Typography fontWeight="bold" fontSize="32px" color="primary">
                     Add a new Product here
                 </Typography>
