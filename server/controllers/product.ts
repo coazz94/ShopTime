@@ -33,6 +33,8 @@ export async function addProduct(req: Request, res: Response) {
                 createdBy: createdBy,
             })
 
+            console.log("Createdby", createdBy)
+
             const savedProduct = await newProduct.save()
             res.status(201).json(savedProduct)
         }
@@ -48,17 +50,16 @@ export async function getProduct(
     res: Response,
     next: NextFunction
 ) {
-    // const id = req.params.id
-    const id = "64b2f931858742a357e73ebd"
+    const id = req.params.id
+    console.log(id)
 
     try {
-        const product = await Product.find(ObjectId("64b2f931858742a357e73ebd")) // no criteria
-        console.log(product)
+        const product = await Product.findOne({ _id: id }) // no criteria
+        // set here the rigth status
+        res.status(200).json(product)
     } catch (error) {
         res.status(404).json({
             errorMessage: "Product not found",
         })
     }
-
-    res.status(200).json("hey")
 }

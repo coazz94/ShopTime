@@ -5,12 +5,12 @@ import { uploadProductPictures } from "../storage/multer"
 const router = express.Router()
 
 // get Router get a specify product
-router.use("/:id", getProduct)
+router.get("/:id", getProduct)
 
 // get route get all products
 
 // post new product
-router.use("/add", uploadProductPictures.single("picture"), addProduct)
+router.post("/add", uploadProductPictures.single("picture"), addProduct)
 
 // edit a product
 

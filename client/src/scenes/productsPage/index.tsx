@@ -1,13 +1,19 @@
 import { useEffect } from "react"
+import { useParams } from "react-router-dom"
 
 export default function ProductPage() {
+    const urlParams = useParams()
+
     useEffect(() => {
-        getProduct(235)
+        if (urlParams.id) getProduct(urlParams.id)
     }, [])
 
-    const getProduct = async (id: number) => {
+    const getProduct = async (id: string) => {
+        // const id2 = "64b621764f3bf98011b7b582"
+
         const response = await fetch(
-            "http://localhost:3000/product/64b2f931858742a357e73ebd",
+            `http://localhost:3000/product/${id}`,
+
             {
                 method: "GET",
             }
