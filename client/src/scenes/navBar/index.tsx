@@ -20,7 +20,7 @@ import { Link } from "react-router-dom"
 
 const pageLinks = [
     { link: "/", page: "Home" },
-    { link: "/products", page: "Products" },
+    { link: "/products/all", page: "Products" },
     { link: "/contact-info", page: "Contact" },
 ]
 

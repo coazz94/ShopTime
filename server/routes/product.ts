@@ -1,6 +1,7 @@
 import express from "express"
 import { addProduct, getProduct } from "../controllers/product"
 import { uploadProductPictures } from "../storage/multer"
+import { getAllProducts } from "../controllers/products"
 
 const router = express.Router()
 
@@ -8,6 +9,7 @@ const router = express.Router()
 router.get("/:id", getProduct)
 
 // get route get all products
+router.get("/getAll", getAllProducts)
 
 // post new product
 router.post("/add", uploadProductPictures.single("picture"), addProduct)
