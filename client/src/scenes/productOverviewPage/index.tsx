@@ -1,21 +1,34 @@
 import { useEffect, useState } from "react"
-import { useNavigate, useParams } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
+import { productObject } from "../productsPage"
+import ProductCard from "./card"
 
 export default function ProductOverview() {
-    const urlParams = useParams()
-    // ANpassen was eigentlich zuruck kommt
-    const [productData, setProductData] = useState<null | productObject>(null)
     const navigate = useNavigate()
+    const [productData, setProductData] = useState<null | productObject[]>(null)
+    const [productCards, setProductCards] = useState<null | React.ReactNode[]>(
+        null
+    )
+
+    // map all products to a card
 
     useEffect(() => {
-        if (urlParams.id) getProduct(urlParams.id)
-    }, [])
+        getProduct()
+    }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
-    const getProduct = async (id: string) => {
-        // const id2 = "64b621764f3bf98011b7b582"
+    useEffect(() => {
+        if (productData !== null) {
+            setProductCards(() => {
+                return productData.map((product) => (
+                    <ProductCard key={product._id} />
+                ))
+            })
+        }
+    }, [productData])
 
+    const getProduct = async () => {
         const response = await fetch(
-            `http://localhost:3000/products/getAll`,
+            `http://localhost:3000/product/get/all`,
 
             {
                 method: "GET",
@@ -26,13 +39,10 @@ export default function ProductOverview() {
             const data = await response.json()
             setProductData(() => data)
         } else {
+            console.log("false request")
             navigate("/error")
         }
     }
 
-    return (
-        <>
-            <h1>ALL PRODUCTS</h1>
-        </>
-    )
+    return productCards !== null ? productCards : <h1>No Items</h1>
 }

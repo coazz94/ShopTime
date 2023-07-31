@@ -1,4 +1,4 @@
-import { NextFunction, Request, Response } from "express"
+import { Request, Response } from "express"
 import Product, { ProductSchema } from "../models/Product"
 import { statuses, categories } from "./frontendData"
 
@@ -45,11 +45,7 @@ export async function addProduct(req: Request, res: Response) {
     }
 }
 
-export async function getProduct(
-    req: Request,
-    res: Response,
-    next: NextFunction
-) {
+export async function getProduct(req: Request, res: Response) {
     const id = req.params.id
     console.log(id)
 

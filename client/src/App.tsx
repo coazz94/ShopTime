@@ -1,5 +1,5 @@
 import Homepage from "./scenes/homePage"
-import Navbar from "./scenes/navBar"
+import Navbar from "./scenes/navbar"
 import ProductOverview from "./scenes/productOverviewPage"
 import ProfilePage from "./scenes/profilePage"
 import LoginPage from "./scenes/loginPage"
@@ -32,7 +32,7 @@ function App() {
                 />
                 <Routes>
                     <Route path="/" element={<Homepage />} />
-                    <Route path="/products/*" element={<ProductOverview />} />
+                    <Route path="/products/all" element={<ProductOverview />} />
                     <Route path="/product/:id" element={<ProductPage />} />
                     <Route path="/login" element={<LoginPage />} />
                     <Route path="/contact-info" element={<ContactPage />} />

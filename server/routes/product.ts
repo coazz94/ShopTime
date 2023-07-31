@@ -9,7 +9,7 @@ const router = express.Router()
 router.get("/:id", getProduct)
 
 // get route get all products
-router.get("/getAll", getAllProducts)
+router.get("/get/all", getAllProducts)
 
 // post new product
 router.post("/add", uploadProductPictures.single("picture"), addProduct)
