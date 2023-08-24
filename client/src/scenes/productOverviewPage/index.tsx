@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { productObject } from "../productsPage"
 import ProductCard from "./card"
+import { Box, Container, Grid } from "@mui/material"
 
 export default function ProductOverview() {
     const navigate = useNavigate()
@@ -13,20 +14,23 @@ export default function ProductOverview() {
     // map all products to a card
 
     useEffect(() => {
-        getProduct()
+        getProducts()
     }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         if (productData !== null) {
             setProductCards(() => {
                 return productData.map((product) => (
-                    <ProductCard key={product._id} />
+                    <Grid border="1px solid black" item justifyContent="center">
+                        {/* <ProductCard key={product._id} /> */}
+                        asasassaxaad
+                    </Grid>
                 ))
             })
         }
     }, [productData])
 
-    const getProduct = async () => {
+    const getProducts = async () => {
         const response = await fetch(
             `http://localhost:3000/product/get/all`,
 
@@ -44,5 +48,26 @@ export default function ProductOverview() {
         }
     }
 
-    return productCards !== null ? productCards : <h1>No Items</h1>
+    // return <>{productCards}</>
+    return (
+        <Grid padding="50px" container justifyContent="center" spacing={6}>
+            {productCards}
+            {productCards}
+            {productCards}
+            {productCards}
+        </Grid>
+    )
+
+    // productCards !== null ? productCards : <h1>No Items</h1>
+}
+
+{
+    /* <Grid
+  container
+  spacing={0}
+  direction="column"
+  alignItems="center"
+  justifyContent="center"
+  sx={{ minHeight: '100vh' }}
+></Grid> */
 }

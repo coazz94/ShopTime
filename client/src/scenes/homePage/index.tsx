@@ -7,8 +7,13 @@ import {
     Divider,
     Typography,
 } from "@mui/material"
+import { Link } from "react-router-dom"
 
-export default function Homepage() {
+type HomepageProps = {
+    isAuth: boolean
+}
+
+export default function Homepage({ isAuth }: HomepageProps) {
     return (
         <>
             <Box
@@ -56,6 +61,8 @@ export default function Homepage() {
                 </Box>
                 <Box>
                     <Button
+                        component={Link}
+                        to={isAuth ? "/product/add-Product" : "/login"}
                         variant="contained"
                         color="secondary"
                         sx={{
@@ -67,6 +74,8 @@ export default function Homepage() {
                         Sell NOW!
                     </Button>
                     <Button
+                        component={Link}
+                        to={"/products/all"}
                         variant="contained"
                         color="secondary"
                         sx={{

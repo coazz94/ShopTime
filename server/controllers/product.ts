@@ -47,13 +47,14 @@ export async function addProduct(req: Request, res: Response) {
 
 export async function getProduct(req: Request, res: Response) {
     const id = req.params.id
-    console.log(id)
 
     try {
+        console.log("product found")
         const product = await Product.findOne({ _id: id }) // no criteria
         // set here the rigth status
         res.status(200).json(product)
     } catch (error) {
+        console.log("product not found")
         res.status(404).json({
             errorMessage: "Product not found",
         })

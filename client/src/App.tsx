@@ -31,7 +31,7 @@ function App() {
                     profilePicture={profilePicture}
                 />
                 <Routes>
-                    <Route path="/" element={<Homepage />} />
+                    <Route path="/" element={<Homepage isAuth={isAuth} />} />
                     <Route path="/products/all" element={<ProductOverview />} />
                     <Route path="/product/:id" element={<ProductPage />} />
                     <Route path="/login" element={<LoginPage />} />

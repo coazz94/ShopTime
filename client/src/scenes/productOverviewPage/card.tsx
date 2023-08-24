@@ -6,7 +6,7 @@ import { Button, CardActionArea, CardActions } from "@mui/material"
 
 export default function ProductCard() {
     return (
-        <Card sx={{ maxWidth: 345 }}>
+        <Card sx={{ maxWidth: 345, border: "1px solid black" }}>
             <CardActionArea>
                 <CardMedia
                     component="img"

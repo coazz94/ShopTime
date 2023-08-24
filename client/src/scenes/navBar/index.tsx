@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import React from "react"
 import CssBaseline from "@mui/material/CssBaseline"
 import MenuIcon from "@mui/icons-material/Menu"
 import ShoppingBasketIcon from "@mui/icons-material/ShoppingBasket"
@@ -58,7 +58,8 @@ function Navbar({ logoutUser, isAuth, profilePicture }: NavbarProps) {
             <AppBar
                 position="static"
                 sx={{
-                    backgroundColor: "transparent",
+                    // backgroundColor: "transparent",
+                    backgroundColor: "red",
                     boxShadow: "none",
                 }}
             >
