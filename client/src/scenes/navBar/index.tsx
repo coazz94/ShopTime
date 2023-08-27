@@ -58,18 +58,23 @@ function Navbar({ logoutUser, isAuth, profilePicture }: NavbarProps) {
             <AppBar
                 position="static"
                 sx={{
-                    // backgroundColor: "transparent",
-                    backgroundColor: "red",
+                    display: "flex",
+                    backgroundColor: "transparent",
                     boxShadow: "none",
                 }}
             >
-                <Container sx={{ maxWidth: "100%" }} maxWidth={false}>
+                <Container
+                    sx={{
+                        maxWidth: "100%",
+                    }}
+                    maxWidth={false}
+                >
                     <Toolbar disableGutters>
                         {/* Normal Screen Nav */}
                         <Box
                             component="img"
                             sx={{
-                                display: { xs: "none", md: "flex" },
+                                display: { xs: "none", md: "block" },
                                 mr: 2,
                                 height: 50,
                                 width: 50,
@@ -83,8 +88,8 @@ function Navbar({ logoutUser, isAuth, profilePicture }: NavbarProps) {
                             component="a"
                             href="/"
                             sx={{
-                                mr: { md: 20, xl: 100, lg: 50 },
-                                display: { xs: "none", md: "flex" },
+                                mr: { md: 20, xl: 50, lg: 30 },
+                                display: { xs: "none", md: "block" },
                                 fontFamily: "Arial",
                                 fontSize: "1.5rem",
                                 fontWeight: 800,
@@ -243,8 +248,9 @@ function Navbar({ logoutUser, isAuth, profilePicture }: NavbarProps) {
                                 variant="contained"
                                 color="primary"
                                 sx={{
-                                    fontSize: "0.8rem",
+                                    fontSize: "0.5rem",
                                     mr: "2rem",
+                                    width: "10rem",
                                 }}
                             >
                                 post a new Product

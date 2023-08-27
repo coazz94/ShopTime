@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { productObject } from "../productsPage"
+import { Box, Divider, Grid } from "@mui/material"
 import ProductCard from "./card"
-import { Box, Container, Grid } from "@mui/material"
 
 export default function ProductOverview() {
     const navigate = useNavigate()
@@ -21,9 +21,10 @@ export default function ProductOverview() {
         if (productData !== null) {
             setProductCards(() => {
                 return productData.map((product) => (
-                    <Grid border="1px solid black" item justifyContent="center">
-                        {/* <ProductCard key={product._id} /> */}
-                        asasassaxaad
+                    <Grid item key={product._id}>
+                        <Box padding="15px">
+                            <ProductCard product={product} />
+                        </Box>
                     </Grid>
                 ))
             })
@@ -41,6 +42,7 @@ export default function ProductOverview() {
 
         if (response.ok) {
             const data = await response.json()
+            console.log(data)
             setProductData(() => data)
         } else {
             console.log("false request")
@@ -48,26 +50,11 @@ export default function ProductOverview() {
         }
     }
 
-    // return <>{productCards}</>
     return (
-        <Grid padding="50px" container justifyContent="center" spacing={6}>
-            {productCards}
-            {productCards}
-            {productCards}
-            {productCards}
-        </Grid>
+        <Box sx={{ marginTop: "30px", backgroundColor: "red" }}>
+            <Grid container justifyContent="center">
+                {productCards}
+            </Grid>
+        </Box>
     )
-
-    // productCards !== null ? productCards : <h1>No Items</h1>
-}
-
-{
-    /* <Grid
-  container
-  spacing={0}
-  direction="column"
-  alignItems="center"
-  justifyContent="center"
-  sx={{ minHeight: '100vh' }}
-></Grid> */
 }
