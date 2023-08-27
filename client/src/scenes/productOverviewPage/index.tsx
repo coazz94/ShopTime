@@ -51,10 +51,30 @@ export default function ProductOverview() {
     }
 
     return (
-        <Box sx={{ marginTop: "30px", backgroundColor: "red" }}>
-            <Grid container justifyContent="center">
-                {productCards}
-            </Grid>
+        <Box
+            sx={{
+                backgroundColor: "yellow",
+                minHeight: "100%%",
+                marginTop: "1%",
+            }}
+        >
+            <Box
+                sx={{
+                    backgroundColor: "red",
+                    position: "left",
+                    width: "400px",
+                    height: "90vh",
+                }}
+            ></Box>
+
+            {/* <Box sx={{ marginTop: "30px", backgroundColor: "red" }}>
+                //{" "}
+                <Grid container justifyContent="center">
+                    // {productCards}
+                    //{" "}
+                </Grid>
+                //{" "}
+            </Box> */}
         </Box>
     )
 }
